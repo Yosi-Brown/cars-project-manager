@@ -14,17 +14,19 @@ function Form() {
     email: '',
     password: ''
   }
-  
-  
-  async function login(value){
-    try {
-      await axios.post(url,value)
-      console.log('successfully to send post request')
 
+
+  async function login(value) {
+    try {
+     const { data } = await axios.post(url, value, {withCredentials:true})
+      // console.log('successfully to send post request')
+      
+      console.log(data)
     } catch (error) {
+      console.log(value)
       console.log(error)
     }
-    }
+  }
 
   return (
     <Formik
@@ -36,9 +38,9 @@ function Form() {
       })}
       initialValues={initialValues}
       onSubmit={(value, action) => {
-        console.log(value)
+        // console.log(value)
         login(value)
-         action.resetForm()
+        action.resetForm()
       }}>
 
 
