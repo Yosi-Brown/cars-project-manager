@@ -18,7 +18,7 @@ function Form() {
 
   async function login(value) {
     try {
-     const { data } = await axios.post(url, value, {withCredentials:true})
+     const { data } = await axios.post(`${url}/login`, value, {withCredentials:true})
       // console.log('successfully to send post request')
       
       console.log(data)
