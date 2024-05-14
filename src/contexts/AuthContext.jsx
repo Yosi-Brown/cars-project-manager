@@ -1,29 +1,28 @@
 import { createContext, useEffect, useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Dashboard from "../components/pages/privatePages/Dashboard";
-const url = 'http://localhost:3000/users'
+const url = 'http://localhost:3000'
 
 export const AuthContext = createContext();
 
 
 function AuthProvider({ children }) {
-  
-  const [ isAuth, setIsAuth ] = useState(false)
+
+  const [isAuth, setIsAuth] = useState(false)
 
   async function authUser() {
     try {
-      const {data} = await axios.get(`${url}/auth`, { withCredentials: true })
-      // if(data.success){ 
-        setIsAuth(true)
+      const { data } = await axios.get(`${url}/users/auth`, { withCredentials: true })
+
       // if(data.success){
-      
-      console.log(isAuth)
-      // }
-      
-    } catch (error) {
-      console.log('blabla')
-      // if(!error.response.data.success) setIsAuth(false)
+        // }
+        setIsAuth(true)
+        
+      } catch (error) {
+        
+        setIsAuth(false)
+        console.log(isAuth)
     }
   }
   useEffect(() => {
@@ -31,7 +30,6 @@ function AuthProvider({ children }) {
   }, [])
 
   const value = {
-    authUser,
     isAuth,
     setIsAuth
   }
