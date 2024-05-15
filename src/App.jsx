@@ -14,6 +14,7 @@ import { AuthContext } from './contexts/AuthContext'
 import { useContext } from "react";
 import SignUp from "./components/SignUp/SignUp";
 import AddProduct from "./components/product/AddProduct";
+import ProductImg from "./components/product/ProductImg";
 
 const Root = ({ isAuth }) => {
   <>
@@ -63,9 +64,9 @@ function App() {
       </Route>
     )
   );
-
   return (
     <>
+{/* <ProductImg /> */}
     <AddProduct />
       {/* <RouterProvider router={router} /> */}
       {/* <SignUp/> */}
