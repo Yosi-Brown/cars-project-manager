@@ -3,7 +3,7 @@ import ProductInput from './ProductInput';
 import axios from 'axios';
 
 
-const url = 'http://localhost:3000/products/'
+const url = 'http://localhost:3000/'
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ function AddProduct() {
     car_type: '',
     year: '',
     price: '',
-    image_link: ''
+    image: ''
   });
   console.log(formData)
 
@@ -30,13 +30,20 @@ function AddProduct() {
   };
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
+    const fileInput = document.getElementById('image')
+  //   fileInput.addEventListener('change', (e) => {
+  //     e.preventDefault
+  //     const file = e.target.files[0];
+  // // const fullPath = event.target.value;
+  //     const path = e.target.value
+  //     console.log(path)
+    // })
     sendProduct()
   }
   async function sendProduct() {
     try {
-      const add = await axios.post(url, formData, { withCredentials: true })
+      const add = await axios.post(`${url}products/add`, formData, { withCredentials: true })
       console.log(add, 'car')
     } catch (error) {
       console.log({
@@ -138,12 +145,12 @@ function AddProduct() {
           onChange={handleChange}
         />
         <ProductInput
-          htmlFor='image_link'
-          type="text"
-          name="image_link"
-          id="image_link"
-          placeholder="Enter image link"
-          value={formData.image_link}
+          htmlFor='image'
+          type="file"
+          name="image"
+          id="image"
+          placeholder="Enter image"
+          value={formData.image}
           onChange={handleChange}
         />
         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
