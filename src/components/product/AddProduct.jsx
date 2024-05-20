@@ -1,56 +1,26 @@
-import React, { useState } from 'react';
 import ProductInput from './ProductInput';
 import axios from 'axios';
-
 
 const url = 'http://localhost:3000/'
 
 function AddProduct() {
-  const [formData, setFormData] = useState({
-    company: '',
-    model: '',
-    engine_cc: '',
-    horsepower: '',
-    seats: '',
-    colors: '',
-    engine_type: '',
-    car_type: '',
-    year: '',
-    price: '',
-    image: ''
-  });
-  console.log(formData)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const data = document.querySelector("form")
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const fileInput = document.getElementById('image')
-  //   fileInput.addEventListener('change', (e) => {
-  //     e.preventDefault
-  //     const file = e.target.files[0];
-  // // const fullPath = event.target.value;
-  //     const path = e.target.value
-  //     console.log(path)
-    // })
-    sendProduct()
-  }
-  async function sendProduct() {
     try {
-      const add = await axios.post(`${url}products/add`, formData, { withCredentials: true })
+      const formData = new FormData(data);
+      const add = await axios.post(`${url}products/add`, formData,
+        // {'content-type': 'multipart/form-data'},
+        { withCredentials: true })
       console.log(add, 'car')
     } catch (error) {
       console.log({
         message: error.message
       })
     }
-  };
+  }
+
   return (
     <>
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
@@ -60,8 +30,6 @@ function AddProduct() {
           id="company"
           name="company"
           placeholder="Enter company name"
-          value={formData.company}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor="model"
@@ -69,35 +37,27 @@ function AddProduct() {
           id="model"
           name="model"
           placeholder="Enter car model"
-          value={formData.model}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor="engine_cc"
-          type="text"
+          type="number"
           id="engine_cc"
           name="engine_cc"
           placeholder="Enter engine cc"
-          value={formData.engine_cc}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor="horsepower"
-          type="text"
+          type="number"
           id="horsepower"
           name="horsepower"
           placeholder="Enter horsepower"
-          value={formData.horsepower}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor="seats"
-          type="text"
+          type="number"
           id="seats"
           name="seats"
           placeholder="Enter number of seats"
-          value={formData.seats}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='colors'
@@ -105,8 +65,6 @@ function AddProduct() {
           name="colors"
           id="colors"
           placeholder="Enter colors (separate with ,)"
-          value={formData.colors}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='engine_type'
@@ -114,8 +72,6 @@ function AddProduct() {
           name="engine_type"
           id="engine_type"
           placeholder="Enter engine type"
-          value={formData.engine_type}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='car_type'
@@ -123,26 +79,20 @@ function AddProduct() {
           name="car_type"
           id="car_type"
           placeholder="Enter car type"
-          value={formData.car_type}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='year'
-          type="text"
+          type="number"
           name="year"
           id="year"
           placeholder="Enter year"
-          value={formData.year}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='price'
-          type="text"
+          type="number"
           name="price"
           id="price"
           placeholder="Enter price"
-          value={formData.price}
-          onChange={handleChange}
         />
         <ProductInput
           htmlFor='image'
@@ -150,8 +100,6 @@ function AddProduct() {
           name="image"
           id="image"
           placeholder="Enter image"
-          value={formData.image}
-          onChange={handleChange}
         />
         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Add Product
