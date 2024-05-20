@@ -1,32 +1,27 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Input from './Input'
 import axios from 'axios'
 import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 const url = 'http://localhost:3000/users'
 
 function Form() {
-  // const [values, setValues] = useState("null");
-
+  // const [values, setValues] = useState("null");  
   const initialValues = {
     email: '',
     password: ''
   }
+  
+  const { isAuth , login } = useContext(AuthContext);
+  const navigate = useNavigate()
 
-
-  async function login(value) {
-    try {
-     const { data } = await axios.post(`${url}/login`, value, {withCredentials:true})
-      // console.log('successfully to send post request')
-      
-      console.log(data)
-    } catch (error) {
-      console.log(value)
-      console.log(error)
-    }
-  }
+  useEffect(() => {
+   if(isAuth) navigate("/dashboard")
+  },[isAuth])
 
   return (
     <Formik

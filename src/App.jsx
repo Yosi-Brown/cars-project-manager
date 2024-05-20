@@ -12,13 +12,12 @@ import NavBar from './components/section/NavBar'
 import Dashboard from "./components/pages/privatePages/Dashboard";
 import { AuthContext } from './contexts/AuthContext'
 import { useContext } from "react";
-import SignUp from "./components/SignUp/SignUp";
-import AddProduct from "./components/product/AddProduct";
+import Products from "./components/product/AddProduct";
 
 const Root = ({ isAuth }) => {
-  <>
-  { isAuth && <NavBar /> }
-  <Outlet />
+ return <>
+    <NavBar />
+    <Outlet />
   </>
 }
 // function App() {
@@ -44,7 +43,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Root isAuth={isAuth} />}>
+      <Route path="/" element={<Root />}>
         {/* public routes */}
         <Route
           index
@@ -57,17 +56,16 @@ function App() {
 
         {/* Private Routes */}
         <Route element={isAuth ? <Outlet /> : <Navigate to={"login"} />}>
-          <Route path="/Dashboard" element={<Dashboard />} />
-          {/* <Route path="products" element={<Products />} /> */}
-        </Route>
+          <Route path="/Dashboard" element={<Dashboard />} /> 
+        <Route path="products" element={<Products />} />
+       </Route>
       </Route>
     )
   );
   return (
     <>
-{/* <ProductImg /> */}
-    <AddProduct />
-      {/* <RouterProvider router={router} /> */}
+      {/* <ProductImg /> */}
+      <RouterProvider router={router} />
       {/* <SignUp/> */}
       {/* <Form /> */}
     </>
