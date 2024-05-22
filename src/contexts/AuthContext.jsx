@@ -30,13 +30,9 @@ function AuthProvider({ children }) {
 
   async function login(value) {
     try {
-      // const { isAuth, setIsAuth } = useContext(AuthContext);
      const { data } = await axios.post(`${url}/users/login`, value, {withCredentials:true})
-        // console.log(data.success)
       if(data.success){
         setIsAuth(true)
-        // console.log(isAuth)
-        // navigate('/dashboard')
       }
     } catch (error) {
       setIsAuth(false)
@@ -44,7 +40,33 @@ function AuthProvider({ children }) {
       console.log(error)
     }
   }
-  
+  async function signUp(value) {
+    try {
+     const { data } = await axios.post(`${url}/users/register`, value, {withCredentials:true})
+      if(data.success){
+        console.log(data.success)
+      }
+    } catch (error) {
+      console.log(value)
+      console.log(error)
+    }
+  }
+
+  async function logOut(){
+    try {
+      const { data } = await axios.get(`${url}/users/logout`, {withCredentials: true})
+      if(data.success){
+        // console.log('logingout')
+        setIsAuth(false)
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
+    
+  }
+
   useEffect(() => {
     authUser()
     // console.log(isAuth)
@@ -53,7 +75,9 @@ function AuthProvider({ children }) {
   const value = {
     isAuth,
     setIsAuth,
-    login
+    login,
+    logOut,
+    signUp
   }
   return (
     <AuthContext.Provider value={value}>

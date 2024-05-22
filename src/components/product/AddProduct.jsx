@@ -1,7 +1,7 @@
 import ProductInput from './ProductInput';
 import axios from 'axios';
 
-const url = 'http://localhost:3000/'
+const url = 'http://localhost:3000'
 
 function AddProduct() {
 
@@ -10,7 +10,7 @@ function AddProduct() {
     e.preventDefault();
     try {
       const formData = new FormData(data);
-      const add = await axios.post(`${url}products/add`, formData,
+      const add = await axios.post(`${url}/products/add`, formData,
         // {'content-type': 'multipart/form-data'},
         { withCredentials: true })
       console.log(add, 'car')

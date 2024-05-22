@@ -5,6 +5,7 @@ import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import PasswordInput from './PasswordInput';
 
 
 const url = 'http://localhost:3000/users'
@@ -32,10 +33,12 @@ function Form() {
 
       })}
       initialValues={initialValues}
-      onSubmit={(value, action) => {
+      onSubmit={async(value, action) => {
         // console.log(value)
-        login(value)
-        action.resetForm()
+        const { data } = await login(value) //לא עובד
+        if(data.success){
+          action.resetForm()
+        }
       }}>
 
 
@@ -51,7 +54,7 @@ function Form() {
                   id="email"
                   placeholder="name@company.com"
                 />
-                <Input
+                <PasswordInput
                   htmlFor='password'
                   type="password"
                   name="password"
@@ -62,6 +65,11 @@ function Form() {
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit">
                     Log In
+                  </button>
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="btn"
+                    onClick={() => navigate('/signup')}>
+                    Sign Up
                   </button>
                   <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
                     Forgot Password?
