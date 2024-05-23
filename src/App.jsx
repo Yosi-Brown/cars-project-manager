@@ -15,6 +15,7 @@ import RegisterForm from "./components/registerUser/RegisterForm";
 import { AuthContext } from './contexts/AuthContext'
 import { useContext } from "react";
 import Products from "./components/product/AddProduct";
+import AddProduct from "./components/product/AddProduct";
 
 const Root = ({ isAuth }) => {
   return <>
@@ -46,6 +47,7 @@ function App() {
           <Route path="/allProducts" element={<Table />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/addproducts" element={<Products />} />
+          <Route path="/addproduct" element={<AddProduct />} />
         </Route>
       </Route>
     )
