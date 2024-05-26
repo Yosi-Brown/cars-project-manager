@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthContext';
-
+import { MdDarkMode } from "react-icons/md";
+import { IoSunny } from "react-icons/io5";
 
 function NavBar() {
   const { logOut } = useContext(AuthContext);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark');
+  };
 
   const menuItems = (
     <>
@@ -23,7 +30,9 @@ function NavBar() {
   );
 
   return (
-    <div className="navbar bg-base-100">
+    // <div className={`navbar bg-base-100  ${darkMode ? 'dark' : ''}`}>
+    <div className="navbar  bg-yellow-300 ">
+    {/* // <div className="dark: "> */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,6 +53,8 @@ function NavBar() {
       </div>
       <div className="navbar-end">
         <button className="btn" onClick={logOut}>Log out</button>
+        <button className="btn" onClick={toggleDarkMode}>{darkMode ? <IoSunny />: <MdDarkMode />}</button>
+        
       </div>
     </div>
   );
