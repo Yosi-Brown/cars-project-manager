@@ -1,6 +1,5 @@
 import React from 'react';
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import ProductPage from '../product/productTable/ProductPage';
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;  // אם isOpen הוא false, המודאל לא יוצג
   
