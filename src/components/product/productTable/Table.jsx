@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "../../modals/Modal";
@@ -10,10 +9,11 @@ import { FiRefreshCcw } from "react-icons/fi";
 
 function Table() {
   const [products, setProducts] = useState([]);
-  const [singleProduct, setsingleProduct] = useState(null);
+  const [singleProduct, setSingleProduct] = useState(null);
   const [refresh, setRefresh] = useState(true);
   const [isProductModalOpen, setisProductModalOpen] = useState(false);
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
+  
 
 
   const fetchProducts = async () => {
@@ -26,10 +26,6 @@ function Table() {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    fetchProducts();
-  }, [refresh]);
 
   async function handleDelete(id) {
     try {
@@ -77,6 +73,49 @@ function Table() {
 
   return (
     <div>
+      const sure = confirm("Are you sure you want to delete?")
+      if(sure){        
+        const { data } = await axios.delete(`http://localhost:3000/products/delete/${id}`);
+        if (data.success) {
+          console.log("deleted");
+          setRefresh((prev) => !prev);
+        }}
+      } catch (error) {
+        console.log(error);
+        console.log("not deleted");
+      }
+    }
+    
+    const handleEdit = (data) => {
+      setSingleProduct(data);
+      setIsModalOpen(true);
+    };
+    
+    const handleCloseModal = () => {
+      setSingleProduct(null);
+      setIsModalOpen(false);
+    };
+    
+    const handleSaveProduct = () => {
+      handleCloseModal();
+    };
+    
+    const handleViewProduct = (product) => {
+      setSingleProduct(product);
+      setIsProductPageOpen(true);
+    };
+    
+    const handleCloseProductPage = () => {
+      setSingleProduct(null);
+      setIsProductPageOpen(false);
+    };
+    
+    useEffect(() => {
+      fetchProducts();
+    }, [refresh]);
+
+    return (
+      <div>
       <button
         type="btn"
         className="justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800:"
@@ -135,11 +174,8 @@ function Table() {
                 <td className="px-6 py-4">{product.year}</td>
                 <td className="px-6 py-4">{product.price}</td>
                 <td className="px-6 py-4">
-                  <img
-                    width={60}
-                    height={60}
-                    src={product.image_link}
-                    alt={product.model}
+                  <img width={60} height={60} src={product.image_link} alt={product.model}
+                  // onClick={}
                   />
                 </td>
                 <td className="px-6 py-4 flex space-x-2">
@@ -160,6 +196,7 @@ function Table() {
                     onClick={() => handleViewProduct(product)}
                   >
                     {/* כפתור צפיית מוצר */}
+                    {/* btn to watch product */}
                     <AiOutlineEye />
                   </button>
                 </td>

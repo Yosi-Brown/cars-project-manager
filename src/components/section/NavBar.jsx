@@ -27,7 +27,7 @@ function NavBar() {
           </ul>
         </details>
       </li>
-      <li><Link to="/addproduct">add product</Link></li>
+      <li><Link to="/addProduct">add product</Link></li>
     </>
   );
 

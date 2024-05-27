@@ -1,6 +1,7 @@
 import ProductInput from "./ProductInput";
 import axios from "axios";
 
+
 const url_post = "http://localhost:3000/products/add";
 const url_put = "http://localhost:3000/products/update";
 
@@ -20,19 +21,16 @@ function AddProduct({ product, setRefresh, onSave }) {
       });
       if (data.success){
         console.log(data)
+        // console.log(url)
         setRefresh(prev => !prev)
         onSave()
       }
-    
-    
       // console.log(data, "car");
-    } catch (error) {
-      console.log({
-        message: error.message
-      });
+    } catch (data) {
+      // alert(data.response.data.message)
+      alert('Cars validation failed')
+      console.log(data.response.data)
     }
-    
-
   };
 
 
