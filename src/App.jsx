@@ -16,6 +16,8 @@ import { AuthContext } from './contexts/AuthContext'
 import { useContext } from "react";
 import Products from "./components/product/AddProduct";
 import AddProduct from "./components/product/AddProduct";
+import OrdersTable from "../orders/OrdersTable";
+
 
 const Root = ({ isAuth }) => {
   return <>
@@ -45,6 +47,7 @@ function App() {
         {/* Private Routes */}
         <Route element={isAuth ? <Outlet /> : <Navigate to={"login"} />}>
           <Route path="/allProducts" element={<Table />} />
+          <Route path="/orders" element={<OrdersTable />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/addproducts" element={<Products />} />
           <Route path="/addproduct" element={<AddProduct />} />
