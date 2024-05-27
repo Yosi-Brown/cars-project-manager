@@ -4,14 +4,17 @@ import Modal from "../../modals/Modal";
 import AddProduct from "../AddProduct";
 import { AiOutlineEye } from "react-icons/ai";
 import ProductPage from "./ProductPage";
+import { FiRefreshCcw } from "react-icons/fi";
+
 
 function Table() {
   const [products, setProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
   const [refresh, setRefresh] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isProductModalOpen, setisProductModalOpen] = useState(false);
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
   
+
 
   const fetchProducts = async () => {
     try {
@@ -26,6 +29,50 @@ function Table() {
 
   async function handleDelete(id) {
     try {
+        const sure = confirm("Are you sure you want to delete?");
+        if (sure) {
+            const { data } = await axios.delete(
+                `http://localhost:3000/products/delete/${id}`
+            );
+            if (data.success) {
+                console.log("Product deleted successfully");
+                setRefresh((prev) => !prev);
+            }
+        }
+    } catch (error) {
+        console.log("Error deleting product:", error);
+    }
+}
+
+
+  const handleEdit = (data) => {
+    setsingleProduct(data);
+    setisProductModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setsingleProduct(null);
+    setisProductModalOpen(false);
+  };
+
+  const handleSaveProduct = () => {
+    handleCloseModal();
+  };
+
+  const handleViewProduct = (product) => {
+    setsingleProduct(product);
+    setIsProductPageOpen(true);
+  };
+
+  const handleCloseProductPage = () => {
+    setsingleProduct(null);
+    setIsProductPageOpen(false);
+  };
+
+  
+
+  return (
+    <div>
       const sure = confirm("Are you sure you want to delete?")
       if(sure){        
         const { data } = await axios.delete(`http://localhost:3000/products/delete/${id}`);
@@ -75,6 +122,13 @@ function Table() {
         onClick={() => handleEdit(null)}
       >
         Add Product
+      </button>
+      <button
+        type="btn"
+        className="justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        onClick={() => setRefresh((prev) => !prev)}
+      >
+        <FiRefreshCcw />
       </button>
 
       <div className="relative w-[80%] mx-auto overflow-x-auto shadow-md sm:rounded-lg">
@@ -141,6 +195,7 @@ function Table() {
                     className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
                     onClick={() => handleViewProduct(product)}
                   >
+                    {/* כפתור צפיית מוצר */}
                     {/* btn to watch product */}
                     <AiOutlineEye />
                   </button>
@@ -151,7 +206,7 @@ function Table() {
         </table>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <Modal isOpen={isProductModalOpen} onClose={handleCloseModal}>
         <AddProduct product={singleProduct} setRefresh={setRefresh} onSave={handleSaveProduct} />
       </Modal>
 
@@ -160,6 +215,7 @@ function Table() {
           <ProductPage product={singleProduct} />
         </Modal>
       )}
+      
     </div>
   );
 }

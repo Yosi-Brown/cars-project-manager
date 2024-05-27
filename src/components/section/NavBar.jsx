@@ -16,11 +16,13 @@ function NavBar() {
   const menuItems = (
     <>
       <li><Link to="/allProducts">Products</Link></li>
+      <li><Link to="/orders">Orders</Link></li>
+
       <li>
         <details>
           <summary>Parent</summary>
           <ul className="p-2 z-10">
-            <li><Link to="/submenu1">Submenu 1</Link></li>
+            <li><Link to="/submenu1">Orders</Link></li>
             <li><Link to="/submenu2">Submenu 2</Link></li>
           </ul>
         </details>
