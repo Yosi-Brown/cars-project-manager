@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 import Input from './Input'
-import axios from 'axios'
 import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
