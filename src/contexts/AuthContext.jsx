@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react"
 import axios from "axios"
-import { Navigate } from "react-router-dom";
 
 const url = 'http://localhost:3000'
 
