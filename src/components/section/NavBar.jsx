@@ -11,7 +11,7 @@ function NavBar() {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark');
-  };
+};
 
   const menuItems = (
     <>
@@ -33,7 +33,7 @@ function NavBar() {
 
   return (
     // <div className={`navbar bg-base-100  ${darkMode ? 'dark' : ''}`}>
-    <div className="navbar  bg-yellow-300 ">
+    <nav className="navbar  bg-yellow-300 dark:bg-fuchsia-600 ">
     {/* // <div className="dark: "> */}
       <div className="navbar-start">
         <div className="dropdown">
@@ -58,7 +58,7 @@ function NavBar() {
         <button className="btn" onClick={toggleDarkMode}>{darkMode ? <IoSunny />: <MdDarkMode />}</button>
         
       </div>
-    </div>
+    </nav>
   );
 }
 
