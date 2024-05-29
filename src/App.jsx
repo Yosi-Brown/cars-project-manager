@@ -10,13 +10,13 @@ import './App.css'
 import Form from './components/logInForm/Form'
 import NavBar from './components/section/NavBar'
 import Dashboard from "./components/pages/privatePages/Dashboard";
-import Table from "./components/product/productTable/Table";
+import ProductTable from "./components/product/productTable/ProductTable";
 import RegisterForm from "./components/registerUser/RegisterForm";
 import { AuthContext } from './contexts/AuthContext'
 import { useContext } from "react";
-import Products from "./components/product/AddProduct";
 import AddProduct from "./components/product/AddProduct";
-import OrdersTable from "../orders/OrdersTable";
+import OrdersTable from "./components/orders/OrdersTable";
+import UsersTable from "./components/users/UsersTable";
 
 
 const Root = ({ isAuth }) => {
@@ -46,18 +46,18 @@ function App() {
 
         {/* Private Routes */}
         <Route element={isAuth ? <Outlet /> : <Navigate to={"login"} />}>
-          <Route path="/allProducts" element={<Table />} />
+          <Route path="/products" element={<ProductTable />} />
           <Route path="/orders" element={<OrdersTable />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/addproducts" element={<Products />} />
-          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/users" element={<UsersTable />} />
+          {/* <Route path="/addproducts" element={<Products />} /> */}
         </Route>
       </Route>
     )
   );
   return (
     <>
-    {/* <Products /> */}
       <RouterProvider router={router} />
     </>
   );

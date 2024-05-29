@@ -6,16 +6,16 @@ import { AiOutlineEye } from "react-icons/ai";
 import ProductPage from "./ProductPage";
 import { FiRefreshCcw } from "react-icons/fi";
 
-function Table() {
+function ProductTable() {
   const [products, setProducts] = useState([]);
-  const [singleProduct, setsingleProduct] = useState(null);
+  const [singleProduct, setSingleProduct] = useState(null);
   const [refresh, setRefresh] = useState(true);
-  const [isProductModalOpen, setisProductModalOpen] = useState(false);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
-    setloading(true)
+    setLoading(true)
     try {
       const { data } = await axios.get("http://localhost:3000/products/getall");
       if (data.success) {
@@ -24,7 +24,7 @@ function Table() {
     } catch (error) {
       console.error(error);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
@@ -48,13 +48,13 @@ function Table() {
   }
 
   const handleEdit = (data) => {
-    setsingleProduct(data);
-    setisProductModalOpen(true);
+    setSingleProduct(data);
+    setIsProductModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setsingleProduct(null);
-    setisProductModalOpen(false);
+    setSingleProduct(null);
+    setIsProductModalOpen(false);
   };
 
   const handleSaveProduct = () => {
@@ -62,12 +62,12 @@ function Table() {
   };
 
   const handleViewProduct = (product) => {
-    setsingleProduct(product);
+    setSingleProduct(product);
     setIsProductPageOpen(true);
   };
 
   const handleCloseProductPage = () => {
-    setsingleProduct(null);
+    setSingleProduct(null);
     setIsProductPageOpen(false);
   };
 
@@ -96,6 +96,7 @@ function Table() {
         </div>
       ) : (
         <div>
+          
           <button
             type="btn"
             className="justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -113,7 +114,7 @@ function Table() {
 
           <div className="relative w-[80%] mx-auto overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm h-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">Company</th>
                   <th scope="col" className="px-6 py-3">Model</th>
@@ -178,4 +179,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default ProductTable;
