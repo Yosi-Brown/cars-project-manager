@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiRefreshCcw } from "react-icons/fi";
+import GlobalModal from "../modals/GlobalModal";
+import RegisterForm from "../registerUser/RegisterForm";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(false);
-  const url = "http://localhost:3000/users"
+  const [handelModalOpen, setHandelModalOpen] = useState(false)
+  const [singleUser, setSingleUser] = useState(null)
+
+  const url = "http://localhost:3000/users";
 
   async function fetchUsers() {
     setLoading(true);
@@ -52,48 +57,16 @@ function UsersTable() {
     }
   };
 
+  async function handleEditUser(bool, user = null) {
+      setSingleUser(user)
+      setHandelModalOpen(bool)
+  };
+
   useEffect(() => {
     fetchUsers();
   }, [refresh]);
 
-  // async function handleDelete(id) {
-  //   try {
-  //     const sure = confirm("Are you sure you want to delete?");
-  //     if (sure) {
-  //       const { data } = await axios.delete(`http://localhost:3000/users/delete/${id}`);
-  //       if (data.success) {
-  //         console.log("User deleted successfully");
-  //         setRefresh((prev) => !prev);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log("Error deleting user:", error);
-  //   }
-  // }
 
-  // const handleEdit = (data) => {
-  //   setsingleUser(data);
-  //   setisUserModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setsingleUser(null);
-  //   setisUserModalOpen(false);
-  // };
-
-  // const handleSaveUser = () => {
-  //   handleCloseModal();
-  // };
-
-  // const handleViewUser = (user) => {
-  //   setsingleUser(user);
-  //   setIsUserPageOpen(true);
-  // };
-
-  // const handleCloseUserPage = () => {
-  //   setsingleUser(null);
-  //   setIsUserPageOpen(false);
-  // };
 
   return (
     <div>
@@ -155,7 +128,6 @@ function UsersTable() {
                           else { e.target.value = user.role }
                         }
                         }
-
                         className={`
                       ${user.role === "regular"
                             ? "bg-yellow-400"
@@ -176,7 +148,12 @@ function UsersTable() {
                     <td className="px-6 py-4 flex space-x-2">
                       <button
                         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                        onClick={() => handleEdit(user)}
+                        onClick={() => {handleEditUser(true, user)
+                          // console.log(handelModalOpen)
+                        }}
+                        // onClick={() => {handleEditUser(user,true)
+                        //   console.log(user)}
+                        // }
                       >
                         Edit
                       </button>
@@ -197,17 +174,17 @@ function UsersTable() {
                 ))}
               </tbody>
             </table>
+            {handelModalOpen && 
+            <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
+              <RegisterForm user={singleUser}/>
+            </GlobalModal>
+            }
+            {/* {handelModalOpen && 
+            <GlobalModal isOpen={handelModalOpen}>
+              <RegisterForm />
+            </GlobalModal>
+            } */}
           </div>
-
-          {/* <Modal isOpen={isUserModalOpen} onClose={handleCloseModal}>
-            <AddUser user={singleUser} setRefresh={setRefresh} onSave={handleSaveUser} />
-          </Modal> */}
-
-          {/* {isUserPageOpen && (
-            <Modal isOpen={isUserPageOpen} onClose={handleCloseUserPage}>
-              <UserPage user={singleUser} />
-            </Modal>
-          )} */}
         </div>
       )}
     </div>
@@ -215,3 +192,45 @@ function UsersTable() {
 }
 
 export default UsersTable;
+
+
+
+
+  // async function handleDelete(id) {
+  //   try {
+  //     const sure = confirm("Are you sure you want to delete?");
+  //     if (sure) {
+  //       const { data } = await axios.delete(`http://localhost:3000/users/delete/${id}`);
+  //       if (data.success) {
+  //         console.log("User deleted successfully");
+  //         setRefresh((prev) => !prev);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error deleting user:", error);
+  //   }
+  // }
+
+  // const handleEdit = (data) => {
+  //   setsingleUser(data);
+  //   setisUserModalOpen(true);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setsingleUser(null);
+  //   setisUserModalOpen(false);
+  // };
+
+  // const handleSaveUser = () => {
+  //   handleCloseModal();
+  // };
+
+  // const handleViewUser = (user) => {
+  //   setsingleUser(user);
+  //   setIsUserPageOpen(true);
+  // };
+
+  // const handleCloseUserPage = () => {
+  //   setsingleUser(null);
+  //   setIsUserPageOpen(false);
+  // };
