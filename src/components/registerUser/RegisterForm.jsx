@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import InputRegister from './InputRegister';
-import axios from 'axios';
 import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -8,32 +7,32 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 const url = 'http://localhost:3000/users';
 
-function RegisterForm() {
+function RegisterForm({ user = null }) {
+  console.log(user)
+  const userData = user || {};
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: userData.firstName || '',
+    lastName: userData.lastName || '',
+    email: userData.email || '',
     password: '',
     confirmPassword: '',
-    phone: '',
-    address: ''
+    phone: userData.phone || '',
+    address: userData.address || ''
   };
 
   const { isAuth, signUp } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuth) navigate("/dashboard");
-  }, [isAuth, navigate]);
+    if (isAuth && !user) navigate("/dashboard");
+  }, [isAuth, navigate, user]);
 
   return (
     <Formik
       validationSchema={Yup.object({
         email: Yup.string().email('Invalid email address').required('Required'),
-        password: Yup.string()
-        // .min(6, 'Password must be at least 6 characters')
-        .required('Required'),
-        confirmPassword: Yup.string()
+        password: user ? Yup.string() : Yup.string().required('Required'),
+        confirmPassword: user ? Yup.string() : Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Required'),
         phone: Yup.string()
@@ -44,8 +43,7 @@ function RegisterForm() {
       initialValues={initialValues}
       onSubmit={(values, actions) => {
         console.log(values)
-        const registerReq = signUp(values);
-        // console.log(registerReq)
+        signUp(values);
         actions.resetForm();
       }}
     >
@@ -75,20 +73,24 @@ function RegisterForm() {
                   id="email"
                   placeholder="name@company.com"
                 />
-                <InputRegister
-                  label='Password'
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                />
-                <InputRegister
-                  label='Confirm Password'
-                  type="password"
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  placeholder="Confirm your password"
-                />
+                {!user && (
+                  <>
+                    <InputRegister
+                      label='Password'
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                    />
+                    <InputRegister
+                      label='Confirm Password'
+                      type="password"
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      placeholder="Confirm your password"
+                    />
+                  </>
+                )}
                 <InputRegister
                   label="Phone"
                   type="text"
@@ -103,20 +105,20 @@ function RegisterForm() {
                   id="address"
                   placeholder="Enter your address"
                 />
-                <div className="flex items-center justify-between">
+               {!user && <div className="flex items-center justify-between">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit">
                     Sign Up
                   </button>
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="btn"
+                    type="button"
                     onClick={() => navigate('/login')}>
                     Log In
                   </button>
                   <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
                     Forgot Password?
                   </a>
-                </div>
+                </div>}
               </FormikForm>
             </div>
           </div>

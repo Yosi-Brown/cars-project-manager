@@ -7,64 +7,35 @@ function OrdersTable() {
   const [refresh, setRefresh] = useState(true);
 
   const fetchOrders = async () => {
-      try {
-          const { data } = await axios.get("http://localhost:3000/orders/getall");
-          if (data.success) {
-              console.log(data.orders)
-              // setOrders(data.orders);
-            }
-              
-            
-        } catch (error) {
-      console.error(error);
+    try {
+      const { data } = await axios.get("http://localhost:3000/orders/getall");
+      if (data.success) {
+        console.log("Fetched orders:", data.orders);
+        setOrders(data.orders);
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
     }
   };
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [refresh]);
 
-//   async function handleDelete(id) {
-//     try {
-//       const sure = confirm("Are you sure you want to delete?");
-//       if (sure) {
-//         const { data } = await axios.delete(`http://localhost:3000/orders/delete/${id}`);
-//         if (data.success) {
-//           console.log("Order deleted successfully");
-//           setRefresh((prev) => !prev);
-//         }
-//       }
-//     } catch (error) {
-//       console.log("Error deleting order:", error);
-//     }
-//   }
-
-  // const handleEdit = (order) => {
-  //   // setSingleOrder(order);
-  //   // setIsOrderModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   // setSingleOrder(null);
-  //   // setIsOrderModalOpen(false);
-  // };
-
-  // const handleSaveOrder = () => {
-  //   // handleCloseModal();
-  // };
-
-  // const handleViewOrder = (order) => {
-  //   // setSingleOrder(order);
-  //   // setIsOrderPageOpen(true);
-  // };
-
-  // const handleCloseOrderPage = () => {
-  //   // setSingleOrder(null);
-  //   // setIsOrderPageOpen(false);
-  // };
-// return (
-//     <div> orders table test</div>
-// )
+  const handleDelete = async (id) => {
+    try {
+      const sure = confirm("Are you sure you want to delete?");
+      if (sure) {
+        const { data } = await axios.delete(`http://localhost:3000/orders/delete/${id}`);
+        if (data.success) {
+          console.log("Order deleted successfully");
+          setRefresh((prev) => !prev);
+        }
+      }
+    } catch (error) {
+      console.log("Error deleting order:", error);
+    }
+  };
 
   return (
     <div>
@@ -78,38 +49,22 @@ function OrdersTable() {
 
       <div className="relative w-[80%] mx-auto overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm h-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Date
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Total Price
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Actions
-              </th>
+              <th scope="col" className="px-6 py-3">Customer Name</th>
+              <th scope="col" className="px-6 py-3">Order Date</th>
+              <th scope="col" className="px-6 py-3">Total Price</th>
+              <th scope="col" className="px-6 py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr
-                key={order._id}
-                className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
-              >
-                <td className="px-6 py-4">{order.user.firstName}</td>
-                <td className="px-6 py-4">{order.createdAt}</td>
+              <tr key={order._id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <td className="px-6 py-4">{order.user.firstName} {order.user.lastName}</td>
+                <td className="px-6 py-4">{new Date(order.createdAt).toLocaleDateString()}</td>
                 <td className="px-6 py-4">{order.totalPrice}</td>
+                {/* <td className="px-6 py-4">{order.products.reduce((total, item) => total + parseFloat(item.product.price.replace(/[^0-9.-]+/g,"")), 0)} USD</td> */}
                 <td className="px-6 py-4 flex space-x-2">
-                  {/* <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                    onClick={() => handleEdit(order)}
-                  >
-                    Edit
-                  </button> */}
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
                     onClick={() => handleDelete(order._id)}
@@ -118,7 +73,7 @@ function OrdersTable() {
                   </button>
                   <button
                     className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
-                    onClick={() => handleViewOrder(order)}
+                    onClick={() => console.log(order.user)}
                   >
                     <AiOutlineEye />
                   </button>
@@ -128,19 +83,8 @@ function OrdersTable() {
           </tbody>
         </table>
       </div>
-
-      {/* <Modal isOpen={isOrderModalOpen} onClose={handleCloseModal}>
-        <AddOrder order={singleOrder} setRefresh={setRefresh} onSave={handleSaveOrder} />
-      </Modal>
-
-      {isOrderPageOpen && (
-        <Modal isOpen={isOrderPageOpen} onClose={handleCloseOrderPage}>
-          <OrderPage order={singleOrder} />
-        </Modal>
-      )} */}
     </div>
   );
 }
 
 export default OrdersTable;
-
