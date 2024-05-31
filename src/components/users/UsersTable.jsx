@@ -57,7 +57,7 @@ function UsersTable() {
     }
   };
 
-  async function handleEditUser(bool, user = null) {
+  function handleEditUser(bool, user = null) {
       setSingleUser(user)
       setHandelModalOpen(bool)
   };

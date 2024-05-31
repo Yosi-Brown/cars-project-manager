@@ -5,6 +5,9 @@ import AddProduct from "../AddProduct";
 import { AiOutlineEye } from "react-icons/ai";
 import ProductPage from "./ProductPage";
 import { FiRefreshCcw } from "react-icons/fi";
+import GlobalModal from "../../modals/GlobalModal";
+import ShowImage from "../../../utils/ShowImage";
+
 
 function ProductTable() {
   const [products, setProducts] = useState([]);
@@ -13,6 +16,8 @@ function ProductTable() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [handleImageModalOpen, setHandelImageModalOpen] = useState(false)
+  // const [ingleImage, setSingleImage] = useState(null)
 
   const fetchProducts = async () => {
     setLoading(true)
@@ -46,6 +51,11 @@ function ProductTable() {
       console.log("Error deleting product:", error);
     }
   }
+
+  function handleEditImage(bool, product = null) {
+    setSingleProduct(product)
+    setHandelImageModalOpen(bool)
+  };
 
   const handleEdit = (data) => {
     setSingleProduct(data);
@@ -96,7 +106,7 @@ function ProductTable() {
         </div>
       ) : (
         <div>
-          
+
           <button
             type="btn"
             className="justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -135,8 +145,10 @@ function ProductTable() {
                     <td className="px-6 py-4">{product.car_type}</td>
                     <td className="px-6 py-4">{product.year}</td>
                     <td className="px-6 py-4">{product.price}</td>
-                    <td className="px-6 py-4">
-                      <img width={60} height={60} src={product.image_link} alt={product.model} />
+                    <td className="px-6 py-4" onClick={() => handleEditImage(true, product)}>
+                      <button>
+                        <img width={60} height={60} src={product.image_link} alt={product.model} />
+                      </button>
                     </td>
                     <td className="px-6 py-4 flex space-x-2">
                       <button
@@ -163,6 +175,12 @@ function ProductTable() {
               </tbody>
             </table>
           </div>
+          
+          {handleImageModalOpen &&
+          <GlobalModal isOpen={handleImageModalOpen} onClose={handleEditImage}>
+            <ShowImage product={singleProduct} onClose={handleEditImage} setRefresh={setRefresh}/> 
+          </GlobalModal>}
+
 
           <Modal isOpen={isProductModalOpen} onClose={handleCloseModal}>
             <AddProduct product={singleProduct} setRefresh={setRefresh} onSave={handleSaveProduct} />
