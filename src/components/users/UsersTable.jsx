@@ -4,6 +4,8 @@ import { FiRefreshCcw } from "react-icons/fi";
 import GlobalModal from "../modals/GlobalModal";
 import RegisterForm from "../registerUser/RegisterForm";
 
+const url = import.meta.env.VITE_URL;
+
 function UsersTable() {
   const [users, setUsers] = useState([]);
   const [refresh, setRefresh] = useState(true);
@@ -11,12 +13,11 @@ function UsersTable() {
   const [handelModalOpen, setHandelModalOpen] = useState(false)
   const [singleUser, setSingleUser] = useState(null)
 
-  const url = "http://localhost:3000/users";
 
   async function fetchUsers() {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${url}/getall`);
+      const { data } = await axios.get(`${url}/users/getall`);
       if (data.success) {
         setUsers(data.users);
       }
@@ -32,7 +33,7 @@ function UsersTable() {
     try {
       const Confirmation = confirm("Are you sure you want to delete?");
       if (Confirmation) {
-        const { data } = await axios.delete(`http://localhost:3000/users/delete/${id}`)
+        const { data } = await axios.delete(`${url}/users/delete/${id}`)
         console.log(data)
         if (data.success) {
           console.log("User deleted successfully")
@@ -49,7 +50,7 @@ function UsersTable() {
     try {
       // console.log(newRole)
       // const Confirmation = confirm("Are you sure you want to change Role?")
-      const { data } = await axios.put(`${url}/update-role`, { id, newRole });
+      const { data } = await axios.put(`${url}/users/update-role`, { id, newRole });
       // console.log(data)
       if (data.success) { setRefresh((prev) => !prev) }
     } catch (error) {
@@ -200,7 +201,7 @@ export default UsersTable;
   //   try {
   //     const sure = confirm("Are you sure you want to delete?");
   //     if (sure) {
-  //       const { data } = await axios.delete(`http://localhost:3000/users/delete/${id}`);
+  //       const { data } = await axios.delete(`${url}/users/delete/${id}`);
   //       if (data.success) {
   //         console.log("User deleted successfully");
   //         setRefresh((prev) => !prev);

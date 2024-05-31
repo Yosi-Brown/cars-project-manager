@@ -8,6 +8,7 @@ import { FiRefreshCcw } from "react-icons/fi";
 import GlobalModal from "../../modals/GlobalModal";
 import ShowImage from "../../../utils/ShowImage";
 
+const url = import.meta.env.VITE_URL
 
 function ProductTable() {
   const [products, setProducts] = useState([]);
@@ -22,7 +23,7 @@ function ProductTable() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const { data } = await axios.get("http://localhost:3000/products/getall");
+      const { data } = await axios.get(`${url}/products/getall`);
       if (data.success) {
         setProducts(data.products);
       }
@@ -41,7 +42,7 @@ function ProductTable() {
     try {
       const sure = confirm("Are you sure you want to delete?");
       if (sure) {
-        const { data } = await axios.delete(`http://localhost:3000/products/delete/${id}`);
+        const { data } = await axios.delete(`${url}/products/delete/${id}`);
         if (data.success) {
           console.log("Product deleted successfully");
           setRefresh((prev) => !prev);

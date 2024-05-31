@@ -7,7 +7,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import PasswordInput from './PasswordInput';
 
 
-const url = 'http://localhost:3000/users'
 
 function Form() {
   // const [values, setValues] = useState("null");  
