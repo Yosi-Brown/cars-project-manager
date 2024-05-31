@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineEye } from "react-icons/ai";
 
+const url = import.meta.env.VITE_URL
+
 function OrdersTable() {
   const [orders, setOrders] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/orders/getall");
+      const { data } = await axios.get(`${url}/orders/getall`);
       if (data.success) {
         console.log("Fetched orders:", data.orders);
         setOrders(data.orders);
@@ -26,7 +28,7 @@ function OrdersTable() {
     try {
       const sure = confirm("Are you sure you want to delete?");
       if (sure) {
-        const { data } = await axios.delete(`http://localhost:3000/orders/delete/${id}`);
+        const { data } = await axios.delete(`${url}/orders/delete/${id}`);
         if (data.success) {
           console.log("Order deleted successfully");
           setRefresh((prev) => !prev);

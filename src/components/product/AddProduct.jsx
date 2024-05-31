@@ -1,9 +1,9 @@
 import ProductInput from "./ProductInput";
 import axios from "axios";
+import.meta.env.VITE_URL
 
-
-const url_post = "http://localhost:3000/products/add";
-const url_put = "http://localhost:3000/products/update";
+const url_post = `${import.meta.env.VITE_URL}/products/add`;
+const url_put = `${import.meta.env.VITE_URL}/products/update`;
 
 function AddProduct({ product, setRefresh, onSave }) {
   const handleSubmit = async (e) => {

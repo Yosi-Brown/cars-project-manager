@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
-const url = 'http://localhost:3000/users';
 
 function RegisterForm({ user = null }) {
   console.log(user)

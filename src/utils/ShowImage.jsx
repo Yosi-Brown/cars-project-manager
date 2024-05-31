@@ -6,7 +6,7 @@ import Loading from '../components/loading/Loading'
 
 
 function ShowImage({ product, onClose, setRefresh }) {
-  const url = 'http://localhost:3000/products/update'
+  const url = import.meta.env.VITE_URL
   
   const [handelImage, setHandelImage] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -23,7 +23,7 @@ try {
     setLoading(true)
     const { data } = await axios({
       method: 'PUT',
-      url: `${url}/${product._id}`,
+      url: `${url}/products/update/${product._id}`,
       data: formData,
       withCredentials: true,
       headers: {
@@ -34,17 +34,9 @@ try {
       console.log(data)
       onClose(false)
       setRefresh(prev => (!prev))
-      // console.log(url)
-      // setRefresh(prev => !prev)
-      // onSave()
-    }
-    
-      
+    }      
     } catch (data) {
-        // alert(data.response.data.message)
-        // alert('Cars validation failed')
         console.log(data.response.data)
-      // console.log(error)
     }
     finally{
       setLoading(false)
