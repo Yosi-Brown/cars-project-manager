@@ -11,7 +11,7 @@ function AddProduct({ product, setRefresh, onSave }) {
     const method = product ? "PUT" : "POST";
     const url = product ? `${url_put}/${product._id}` : url_post;
     const formData = new FormData(e.target);
-
+    console.log(formData)
     try {
       const { data } = await axios({
         method: method,
@@ -120,6 +120,7 @@ function AddProduct({ product, setRefresh, onSave }) {
           placeholder="Enter price"
           defaultValue={product ? product.price : ""}
         />
+        {!product &&
         <ProductInput
           htmlFor="image"
           type="file"
@@ -128,12 +129,13 @@ function AddProduct({ product, setRefresh, onSave }) {
           placeholder="Enter image"
           defaultValue={product ? product.image : ""}
         />
+        }
 
         <button
           type="submit"
           className="col-span-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          {product ? "save changes" : "Add Product"}
+          {product ? "Save Changes" : "Add Product"}
         </button>
         {/* <button onClick={console.log("jnl", product)}>rg</button> */}
       </form>
