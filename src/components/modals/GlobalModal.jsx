@@ -1,9 +1,8 @@
 import React from 'react'
 
-// function GlobalModal() {
+
 function GlobalModal({ children, isOpen, onClose }) {
-  // const modal = document.getElementById('global_modal')
-  // console.log(children)
+
   if(!isOpen) return null
 
   return (

@@ -16,10 +16,7 @@ function AuthProvider({ children }) {
 
       if(data.success){
         setIsAuth(true)
-        // Navigate('/dashboard')
         }
-        // console.log(isAuth)
-        // console.log(data.success)
       } catch (error) {
         console.log(error)
         setIsAuth(false)
