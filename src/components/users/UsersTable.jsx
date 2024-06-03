@@ -8,17 +8,17 @@ import ShowUser from "../../utils/ShowUser";
 const url = import.meta.env.VITE_URL;
 
 function UsersTable({ users, isLoading }) {
-  // console.log(users)
+
   const [handelModalOpen, setHandelModalOpen] = useState(false)
   const [singleUser, setSingleUser] = useState(null)
   const [viewUser, setViewUser] = useState(false)
   const { setSendGetRequest } = useContext(GlobalContext);
 
 
-  async function handleDeleteUser(id) {
+  const handleDeleteUser= async (id) => {
     try {
-      const Confirmation = confirm("Are you sure you want to delete?");
-      if (Confirmation) {
+      const confirmation = confirm("Are you sure you want to delete?");
+      if (confirmation) {
         const { data } = await axios.delete(`${url}/users/delete/${id}`)
         console.log(data)
         if (data.success) {
@@ -32,36 +32,32 @@ function UsersTable({ users, isLoading }) {
     }
   };
 
-  async function handleRole(id, newRole) {
+  const handleRole = async (id, newRole) => {
     try {
-      // console.log(newRole)
-      // const Confirmation = confirm("Are you sure you want to change Role?")
       const { data } = await axios.put(`${url}/users/update-role`, { id, newRole });
       // console.log(data)
       if (data.success) {
         alert('role change successful')
         setSendGetRequest((prev) => !prev)
-
-
       }
     } catch (error) {
       console.log(error)
     }
   };
 
-  function handleEditUser(bool, user = null) {
+  const handleEditUser = (bool, user = null) => {
     setSingleUser(user)
     setHandelModalOpen(bool)
   };
 
   const handleViewUser = (bool, user = null) => {
-    console.log(user)
     setSingleUser(user)
     setViewUser(bool)
 
   };
 
-  return (<>
+  return (
+  <>
     {!isLoading && (<div>
       <div>
         <button
@@ -140,7 +136,7 @@ function UsersTable({ users, isLoading }) {
           </table>
           {handelModalOpen &&
             <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
-              <RegisterForm user={singleUser} />
+              <RegisterForm user={singleUser} editUser={true} onClose={handleEditUser}/>
             </GlobalModal>
           }
 
@@ -161,45 +157,3 @@ function UsersTable({ users, isLoading }) {
 }
 
 export default UsersTable;
-
-
-
-
-// async function handleDelete(id) {
-//   try {
-//     const sure = confirm("Are you sure you want to delete?");
-//     if (sure) {
-//       const { data } = await axios.delete(`${url}/users/delete/${id}`);
-//       if (data.success) {
-//         console.log("User deleted successfully");
-//         setRefresh((prev) => !prev);
-//       }
-//     }
-//   } catch (error) {
-//     console.log("Error deleting user:", error);
-//   }
-// }
-
-// const handleEdit = (data) => {
-//   setsingleUser(data);
-//   setisUserModalOpen(true);
-// };
-
-// const handleCloseModal = () => {
-//   setsingleUser(null);
-//   setisUserModalOpen(false);
-// };
-
-// const handleSaveUser = () => {
-//   handleCloseModal();
-// };
-
-// const handleViewUser = (user) => {
-//   setsingleUser(user);
-//   setIsUserPageOpen(true);
-// };
-
-// const handleCloseUserPage = () => {
-//   setsingleUser(null);
-//   setIsUserPageOpen(false);
-// };

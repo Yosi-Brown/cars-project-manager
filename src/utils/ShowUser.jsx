@@ -1,7 +1,7 @@
 import React from 'react';
 
 function ShowUser({ user }) {
-  console.log(user);
+  
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700">

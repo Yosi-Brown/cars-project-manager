@@ -4,9 +4,13 @@ import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
+import { GlobalContext } from '../../contexts/GlobalContext';
+
+const url = import.meta.env.VITE_URL
 
 
-function RegisterForm({ user = null }) {
+function RegisterForm({ user = null, editUser = false, onClose }) {
   console.log(user)
   const userData = user || {};
   const initialValues = {
@@ -16,11 +20,30 @@ function RegisterForm({ user = null }) {
     password: '',
     confirmPassword: '',
     phone: userData.phone || '',
-    address: userData.address || ''
+    address: userData.address || '',
   };
 
+  const { setSendGetRequest } = useContext(GlobalContext);
   const { isAuth, signUp } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handelEditUser = async (values) => {
+    try {
+      const confirmation = confirm("Are you sure you want Save?")
+      if(confirmation){
+        console.log(values)
+        const { data } = await axios.put(`${url}/users/updateUser/${user._id}`,values);
+        if (data.success) {
+          console.log('User updated')
+          setSendGetRequest((prev) => !prev);
+          onClose(false)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   useEffect(() => {
     if (isAuth && !user) navigate("/dashboard");
@@ -42,90 +65,94 @@ function RegisterForm({ user = null }) {
       initialValues={initialValues}
       onSubmit={(values, actions) => {
         console.log(values)
-        signUp(values);
-        actions.resetForm();
+        if (!editUser) {
+          signUp(values);
+          actions.resetForm();
+        } else {
+          handelEditUser(values)
+        }
       }}
     >
       {/* <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8"> */}
-              
-              <form >
-              <FormikForm className="space-y-4 md:space-y-6" action="#">
-                <InputRegister
-                  label='First Name'
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  placeholder="Enter your first name"
-                />
-                <InputRegister
-                  label='Last Name'
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  placeholder="Enter your last name"
-                />
-                <InputRegister
-                  label='Email'
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="name@company.com"
-                />
-                {!user && (
-                  <>
-                    <InputRegister
-                      label='Password'
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                    />
-                    <InputRegister
-                      label='Confirm Password'
-                      type="password"
-                      name="confirmPassword"
-                      id="confirmPassword"
-                      placeholder="Confirm your password"
-                    />
-                  </>
-                )}
-                <InputRegister
-                  label="Phone"
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  placeholder="Enter your phone number"
-                />
-                <InputRegister
-                  label='Address'
-                  type="text"
-                  name="address"
-                  id="address"
-                  placeholder="Enter your address"
-                />
-               {!user && <div className="flex items-center justify-between">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit">
-                    Sign Up
-                  </button>
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="button"
-                    onClick={() => navigate('/login')}>
-                    Log In
-                  </button>
-                  <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                    Forgot Password?
-                  </a>
-                </div>}
-              </FormikForm>
-              </form>
-            {/* </div>
-          </div>
-        </div>
-      </section> */}
+
+      
+        <FormikForm className="space-y-4 md:space-y-6">
+          <InputRegister
+            label='First Name'
+            type="text"
+            name="firstName"
+            id="firstName"
+            placeholder="Enter your first name"
+          />
+          <InputRegister
+            label='Last Name'
+            type="text"
+            name="lastName"
+            id="lastName"
+            placeholder="Enter your last name"
+          />
+          <InputRegister
+            label='Email'
+            type="email"
+            name="email"
+            id="email"
+            placeholder="name@company.com"
+          />
+          {!user && (
+            <>
+              <InputRegister
+                label='Password'
+                type="password"
+                name="password"
+                id="password"
+                placeholder="••••••••"
+              />
+              <InputRegister
+                label='Confirm Password'
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+              />
+            </>
+          )}
+          <InputRegister
+            label="Phone"
+            type="text"
+            name="phone"
+            id="phone"
+            placeholder="Enter your phone number"
+          />
+          <InputRegister
+            label='Address'
+            type="text"
+            name="address"
+            id="address"
+            placeholder="Enter your address"
+          />
+          {!editUser ? (<div className="flex items-center justify-between">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              Sign Up
+            </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+              onClick={() => navigate('/login')}>
+              Log In
+            </button>
+            <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+              Forgot Password?
+            </a>
+          </div>) : (<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Save changes
+          </button>)}
+        </FormikForm>
+    
     </Formik>
   );
 }
