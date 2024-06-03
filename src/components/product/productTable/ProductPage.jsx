@@ -1,4 +1,3 @@
-// src/components/product/ProductPage.jsx
 import React from 'react';
 import { IoIosStar, IoIosStarOutline } from 'react-icons/io';
 

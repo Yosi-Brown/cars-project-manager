@@ -114,11 +114,19 @@ function AddProduct({ product, setRefresh, onSave }) {
         />
         <ProductInput
           htmlFor="price"
-          type="string"
+          type="number"
           name="price"
           id="price"
           placeholder="Enter price"
           defaultValue={product ? product.price : ""}
+        />
+        <ProductInput
+          htmlFor="discountPrice"
+          type="number"
+          name="discountPrice"
+          id="discountPrice"
+          placeholder="Enter price"
+          defaultValue={product ? product.discountPrice : ""}
         />
         {!product &&
         <ProductInput

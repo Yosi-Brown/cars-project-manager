@@ -18,7 +18,7 @@ function OrdersTable({ orders, isLoading }) {
 
 
   const showProducts = (bool, products = null) => {
-    const productsList = products?.flatMap(item => item.product);
+    const productsList = products?.map(item => item.product);
     setProductsOrder(productsList);
     setViewProductsModalOpen(bool);
 
@@ -59,7 +59,8 @@ function OrdersTable({ orders, isLoading }) {
 
   };
 
-  return (<>
+  return (
+  <>
     {!isLoading && <div>
       <button
         type="button"
@@ -135,13 +136,7 @@ function OrdersTable({ orders, isLoading }) {
                     className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
                     onClick={() => {
                       showProducts(true, order.products)
-                      // const productsList = order.products.flatMap(item => item.product)
-                      // showProducts(true, productsList)
-                      // console.log(productsList)
-                      // console.log(productsOrder)
-                      // setProductsOrder(productsList)
-                    }
-                    }>
+                      }}>
                     View Products
                   </button>
                 </td>

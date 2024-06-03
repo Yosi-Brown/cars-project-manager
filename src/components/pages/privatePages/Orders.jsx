@@ -7,9 +7,9 @@ const url = import.meta.env.VITE_URL;
 function Orders() {
 
   const [data, isLoading, isError] = useFetch(`${url}/orders/getall`)
-  // console.log(data)
 
-  return (<>
+  return (
+  <>
     {isLoading && <Loading />}
     {/* {!isLoading && !data?.users.length === 0 && <div>have not users yet</div>} */}
     {isError && <div>Error</div>}

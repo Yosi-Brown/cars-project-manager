@@ -18,47 +18,23 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
   const [handleImageModalOpen, setHandelImageModalOpen] = useState(false)
   const { setSendGetRequest } = useContext(GlobalContext);
-  // console.log(products)
-  // const [products, setProducts] = useState([]);
-  // const [refresh, setRefresh] = useState(true);
-  // const [loading, setLoading] = useState(false);
-  // const [ingleImage, setSingleImage] = useState(null)
 
-
-  // const fetchProducts = async () => {
-  //   setLoading(true)
-  //   try {
-  //     const { data } = await axios.get(`${url}/products/getall`);
-  //     if (data.success) {
-  //       setProducts(data.products);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // fetchProducts();
-  // }, [refresh]);
-
-  async function handleDelete(id) {
+  const handleDelete = async (id) => {
     try {
       const sure = confirm("Are you sure you want to delete?");
       if (sure) {
         const { data } = await axios.delete(`${url}/products/delete/${id}`);
         if (data.success) {
           console.log("Product deleted successfully");
-          setSendGetRequest((prev) => !prev);
+          // setSendGetRequest((prev) => !prev);
         }
       }
     } catch (error) {
       console.log("Error deleting product:", error);
     }
-  }
+  };
 
-  function handleEditImage(bool, product = null) {
+  const handleEditImage = (bool, product = null) => {
     setSingleProduct(product)
     setHandelImageModalOpen(bool)
   };
@@ -87,7 +63,8 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
     setIsProductPageOpen(false);
   };
 
-  return (<>
+  return (
+  <>
     {!isLoading &&
       <div>
         <div>
@@ -105,7 +82,7 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
               onClick={() => setSendGetRequest((prev) => !prev)}
             >Refresh</button></>}
 
-          <div className="p-4 relative w-[90%] mx-auto overflow-x-auto shadow-md sm:rounded-lg">
+          <div className={`p-4 relative ${viewOnly ? "w-full" : "w-[80%]"} mx-auto overflow-x-auto shadow-md sm:rounded-lg`}>
             <table className="w-full text-sm h-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
                 <tr>
