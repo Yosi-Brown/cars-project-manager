@@ -19,6 +19,7 @@ function OrdersTable({ orders, isLoading }) {
 
   const showProducts = (bool, products = null) => {
     const productsList = products?.map(item => item.product);
+    // console.log(products)
     setProductsOrder(productsList);
     setViewProductsModalOpen(bool);
 
@@ -151,7 +152,7 @@ function OrdersTable({ orders, isLoading }) {
           }
         {viewProductsModalOpen &&
           <GlobalModal isOpen={viewProductsModalOpen} onClose={showProducts}>
-            <ProductTable products={productsOrder} viewOnly={true}/>
+            <ProductTable products={productsOrder} viewOnly={true} />
           </GlobalModal>}
 
       </div>
