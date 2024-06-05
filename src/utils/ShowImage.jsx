@@ -43,7 +43,7 @@ function ShowImage({ product, onClose, setRefresh }) {
 
   return (
     <>{!loading ?
-      <>
+      <div className='h-max'>
         <img src={product.image_link} alt={product.model} />
         {handelImage && <ProductInput
           htmlFor="image"
@@ -65,7 +65,7 @@ function ShowImage({ product, onClose, setRefresh }) {
             }
 
           >
-            Save</button>)}</> : <Loading />}
+            Save</button>)}</div> : <Loading />}
     </>
   )
 }
