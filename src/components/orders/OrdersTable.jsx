@@ -4,6 +4,7 @@ import { GlobalContext } from "../../contexts/GlobalContext";
 import GlobalModal from "../modals/GlobalModal";
 import ShowUser from "../../utils/ShowUser";
 import ProductTable from "../product/productTable/ProductTable";
+import { toastFire } from "../../utils/Toaster";
 
 
 const url = import.meta.env.VITE_URL
@@ -35,27 +36,31 @@ function OrdersTable({ orders, isLoading }) {
     try {
       const sure = confirm("Are you sure you want to delete?");
       if (sure) {
-        const { data } = await axios.delete(`${url}/orders/delete/${id}`);
+        const { data } = await axios.delete(`${url}/orders/delete/${id}`, { withCredentials: true });
         if (data.success) {
+          toastFire(true, data.message)
           console.log("Order deleted successfully");
           setSendGetRequest((prev) => !prev);
         }
       }
     } catch (error) {
-      console.log("Error deleting order:", error);
+      console.log(error)
+      toastFire(false, error.response.data.error);
     }
   };
 
   const handleStatus = async (id, newStatus) => {
     try {
-      const { data } = await axios.put(`${url}/orders/updateStatus`, { id, newStatus });
+      const { data } = await axios.put(`${url}/orders/updateStatus/${id}`, { newStatus }, { withCredentials: true });
       if (data.success) {
-        alert('Status updated successful')
+        console.log(data.message)
+        toastFire(true, data.message)
         setSendGetRequest((prev) => !prev)
       }
 
     } catch (error) {
       console.log(error)
+      toastFire(false, error.response.data.error)
     }
 
   };
@@ -72,7 +77,7 @@ function OrdersTable({ orders, isLoading }) {
       </button>
       <div className="relative w-[80%] mx-auto overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm h-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">Customer Name</th>
               <th scope="col" className="px-6 py-3">Order Date</th>

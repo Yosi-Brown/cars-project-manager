@@ -11,7 +11,7 @@ function useFetch(url) {
   async function getRequest() {
     try {
       setIsLoading(true)
-      const { data } = await axios.get(url)
+      const { data } = await axios.get(url, {withCredentials: true})
       setData(data)
 
     } catch (error) {
@@ -26,6 +26,6 @@ function useFetch(url) {
   }, [sendGetRequest])
 
   return [data, isLoading, isError]
-}
+};
 
 export default useFetch

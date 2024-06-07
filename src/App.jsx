@@ -19,6 +19,7 @@ import OrdersTable from "./components/orders/OrdersTable";
 import Users from "./components/pages/privatePages/Users";
 import Products from "./components/pages/privatePages/Products";
 import Orders from "./components/pages/privatePages/Orders"
+import SignUp from "./components/pages/publicPages/SignUp";
 
 const Root = ({ isAuth }) => {
   return <>
@@ -43,7 +44,7 @@ function App() {
         />
 
         <Route path="/login" element={<Form />} />
-        <Route path="/signup" element={<RegisterForm />} />
+        <Route path="/signUp" element={<SignUp />} />
 
 
         {/* Private Routes */}
@@ -65,4 +66,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

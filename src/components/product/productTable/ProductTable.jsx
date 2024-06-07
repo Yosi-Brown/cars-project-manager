@@ -7,7 +7,7 @@ import ProductPage from "./ProductPage";
 import GlobalModal from "../../modals/GlobalModal";
 import ShowImage from "../../../utils/ShowImage";
 import { GlobalContext } from "../../../contexts/GlobalContext";
-
+import { toastFire } from "../../../utils/Toaster";
 
 const url = import.meta.env.VITE_URL
 
@@ -21,16 +21,19 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
 
   const handleDelete = async (id) => {
     try {
-      const sure = confirm("Are you sure you want to delete?");
-      if (sure) {
-        const { data } = await axios.delete(`${url}/products/delete/${id}`);
+      const Confirmation = confirm("Are you sure you want to delete?");
+      if (Confirmation) {
+        const { data } = await axios.delete(`${url}/products/delete/${id}`, { withCredentials: true });
         if (data.success) {
           console.log("Product deleted successfully");
-          // setSendGetRequest((prev) => !prev);
+          toastFire(true, data.message)
+          setSendGetRequest((prev) => !prev);
         }
       }
     } catch (error) {
-      console.log("Error deleting product:", error);
+      console.log("Error deleting product:", error)
+      toastFire(false, error.response.data.error)
+      setSendGetRequest((prev) => !prev);
     }
   };
 

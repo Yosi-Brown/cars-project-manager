@@ -1,11 +1,14 @@
+import { toastFire } from "../../utils/Toaster";
 import ProductInput from "./ProductInput";
 import axios from "axios";
 import.meta.env.VITE_URL
+
 
 const url_post = `${import.meta.env.VITE_URL}/products/add`;
 const url_put = `${import.meta.env.VITE_URL}/products/update`;
 
 function AddProduct({ product, setRefresh, onSave }) {
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = product ? "PUT" : "POST";
@@ -22,13 +25,14 @@ function AddProduct({ product, setRefresh, onSave }) {
       if (data.success){
         console.log(data)
         // console.log(url)
+        toastFire(true, data.message)
         setRefresh(prev => !prev)
         onSave()
       }
       // console.log(data, "car");
     } catch (data) {
       // alert(data.response.data.message)
-      alert('Cars validation failed')
+      toastFire(true, data.message)
       console.log(data.response.data)
     }
   };

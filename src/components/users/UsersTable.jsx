@@ -4,6 +4,8 @@ import GlobalModal from "../modals/GlobalModal";
 import RegisterForm from "../registerUser/RegisterForm";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import ShowUser from "../../utils/ShowUser";
+import { toastFire } from "../../utils/Toaster";
+
 
 const url = import.meta.env.VITE_URL;
 
@@ -19,29 +21,32 @@ function UsersTable({ users, isLoading }) {
     try {
       const confirmation = confirm("Are you sure you want to delete?");
       if (confirmation) {
-        const { data } = await axios.delete(`${url}/users/delete/${id}`)
+        const { data } = await axios.delete(`${url}/users/delete/${id}`, { withCredentials: true })
         console.log(data)
         if (data.success) {
           console.log("User deleted successfully")
+          toastFire(true, data.message)
           setSendGetRequest((prev) => !prev);
         }
       }
     } catch (error) {
       console.log(error)
-      console.log("User deletion failed")
+      toastFire(false, error.response.data.error)
     }
   };
 
   const handleRole = async (id, newRole) => {
     try {
-      const { data } = await axios.put(`${url}/users/update-role`, { id, newRole });
+      const { data } = await axios.put(`${url}/users/update-role/${id}`, {newRole}, { withCredentials: true });
       // console.log(data)
       if (data.success) {
-        alert('role change successful')
+        toastFire(true, data.message)
+        // alert('role change successful')
         setSendGetRequest((prev) => !prev)
       }
     } catch (error) {
       console.log(error)
+      toastFire(false, error.response.data.error)
     }
   };
 
