@@ -2,16 +2,20 @@ import React, { useContext, useEffect } from 'react';
 import InputRegister from './InputRegister';
 import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Await, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { GlobalContext } from '../../contexts/GlobalContext';
+
+
 
 const url = import.meta.env.VITE_URL
 
 
 function RegisterForm({ user = null, editUser = false, onClose }) {
-  console.log(user)
+  
+
+  // console.log(user)
   const userData = user || {};
   const initialValues = {
     firstName: userData.firstName || '',
@@ -24,7 +28,7 @@ function RegisterForm({ user = null, editUser = false, onClose }) {
   };
 
   const { setSendGetRequest } = useContext(GlobalContext);
-  const { isAuth, signUp } = useContext(AuthContext);
+  const { isAuth, setIsAuth, signUp ,register } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handelEditUser = async (values) => {
@@ -32,7 +36,7 @@ function RegisterForm({ user = null, editUser = false, onClose }) {
       const confirmation = confirm("Are you sure you want Save?")
       if (confirmation) {
         console.log(values)
-        const { data } = await axios.put(`${url}/users/updateUser/${user._id}`, values);
+        const { data } = await axios.put(`${url}/users/updateUser/${user._id}`, values, { withCredentials: true });
         if (data.success) {
           console.log('User updated')
           setSendGetRequest((prev) => !prev);
@@ -64,17 +68,20 @@ function RegisterForm({ user = null, editUser = false, onClose }) {
       })}
       initialValues={initialValues}
       onSubmit={(values, actions) => {
-        console.log(values)
+        // console.log(values)
         if (!editUser) {
           signUp(values);
-          actions.resetForm();
+          if(isAuth){
+            actions.resetForm();
+            // navigate('/login');
+          };
         } else {
           handelEditUser(values)
         }
       }}
     >
-      <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <section className=" dark:bg-gray-900">
+        <div className="flex flex-col mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 
