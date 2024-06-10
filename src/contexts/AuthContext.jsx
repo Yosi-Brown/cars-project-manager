@@ -51,7 +51,7 @@ function AuthProvider({ children }) {
         toastFire(true, data.message)
       }
     } catch (error) {
-      toastFire(false, error.response.data.error)
+      toastFire(false, error.response.data.message)
       console.log(value)
       console.log(error)
     }
