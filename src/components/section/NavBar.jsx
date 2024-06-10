@@ -4,38 +4,25 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSunny } from "react-icons/io5";
 
-function NavBar() {
+function Navbar() {
   const { logOut } = useContext(AuthContext);
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark');
-};
+  };
 
   const menuItems = (
     <>
       <li><Link to="/products">Products</Link></li>
       <li><Link to="/orders">Orders</Link></li>
       <li><Link to="/users">Users</Link></li>
-
-      {/* <li>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2 z-10">
-            <li><Link to="/submenu1">Orders</Link></li>
-            <li><Link to="/submenu2">Submenu 2</Link></li>
-          </ul>
-        </details>
-      </li> */}
-      {/* <li><Link to="/add-product">add product</Link></li> */}
     </>
   );
 
   return (
-    // <div className={`navbar bg-base-100  ${darkMode ? 'dark' : ''}`}>
     <nav className="navbar  bg-yellow-300 dark:bg-fuchsia-600 ">
-    {/* // <div className="dark: "> */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -56,13 +43,13 @@ function NavBar() {
       </div>
       <div className="navbar-end">
         <button className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500" onClick={logOut}>Log out</button>
-        <button className="btn dark:bg-gray-700 dark:border-gray-500" onClick={toggleDarkMode}>{darkMode ? <IoSunny /> : <MdOutlineDarkMode />
+        <button className="btn dark:bg-gray-700 dark:border-gray-500 dark:text-white" onClick={toggleDarkMode}>{darkMode ? <IoSunny /> : <MdOutlineDarkMode />
 
-}</button>
-        
+        }</button>
+
       </div>
     </nav>
   );
 }
 
-export default NavBar;
+export default Navbar;

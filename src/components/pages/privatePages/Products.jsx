@@ -14,8 +14,8 @@ function Products() {
   const [productPerPage] = useState(8)
 
 
-  const indexOfLastProduct = currentPage * productPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+  const indexOfLastProduct = currentPage * productPerPage; //17
+  const indexOfFirstProduct = indexOfLastProduct - productPerPage; //17-3
   const currentProducts = data?.products.slice(indexOfFirstProduct, indexOfLastProduct);
 
 
