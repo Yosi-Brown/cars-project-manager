@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { toastFire } from "../utils/Toaster";
+import { GlobalContext } from "./GlobalContext";
 
 
 const url = import.meta.env.VITE_URL
@@ -10,7 +11,10 @@ export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
 
+  const { currentUser, setCurrentUser } = useContext(GlobalContext)
+
   const [isAuth, setIsAuth] = useState(false)
+
 
   async function authUser() {
     try {
@@ -30,7 +34,7 @@ function AuthProvider({ children }) {
     try {
       const { data } = await axios.post(`${url}/users/login`, value, { withCredentials: true })
       if (data.success) {
-        console.log('login');
+        setCurrentUser(data.user);
         toastFire(true, data.message)
         setIsAuth(true)
       }
@@ -43,10 +47,10 @@ function AuthProvider({ children }) {
   }
 
   async function signUp(value) {
-
     try {
       const { data } = await axios.post(`${url}/users/register`, value, { withCredentials: true })
       if (data.success) {
+        setCurrentUser(data.user);
         setIsAuth(true) //התחברות אוטומטית אחרי הרשמה במידה ומתקבל טוקן בהרשמה
         toastFire(true, data.message)
       }
@@ -64,12 +68,35 @@ function AuthProvider({ children }) {
         toastFire(true, data.message)
         // console.log('logingout')
         setIsAuth(false)
+        setCurrentUser(null)
       }
     } catch (error) {
       console.log(error)
       toastFire(false, error.response.data.error)
     }
   };
+
+  const updateProfile = async (values) => {
+    try {
+      const id = currentUser._id
+      // console.log(id);
+      // console.log(values)
+      const confirmation = confirm("Are you sure you want Save?")
+      if (confirmation) {
+        const { data } = await axios.put(`${url}/users/updateProfile/${id}`, values, { withCredentials: true });
+        if (data.success) {
+          toastFire(true, data.message)
+          console.log('profile updated')
+          setCurrentUser(data.user)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+      toastFire(false, error.response.data.error)
+    }
+
+
+  }
 
   useEffect(() => {
     authUser()
@@ -82,6 +109,9 @@ function AuthProvider({ children }) {
     login,
     logOut,
     signUp,
+    currentUser,
+    setCurrentUser,
+    updateProfile
   }
   return (
     <AuthContext.Provider value={value}>
