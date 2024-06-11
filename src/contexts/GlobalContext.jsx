@@ -7,9 +7,24 @@ export const GlobalContext = createContext();
 
 function GlobalProvider({ children }) {
 
+  const updateCurrentUser = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  };
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      setCurrentUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  const [currentUser, setCurrentUser] = useState({})
   const [sendGetRequest, setSendGetRequest] = useState(false)
 
   const value = {
+    currentUser, 
+    setCurrentUser: updateCurrentUser,
     setSendGetRequest,
     sendGetRequest
   }

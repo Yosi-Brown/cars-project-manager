@@ -3,14 +3,25 @@ import { Link } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthContext';
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSunny } from "react-icons/io5";
+import { ImProfile } from "react-icons/im";
+import GlobalModal from '../modals/GlobalModal';
+import RegisterForm from '../registerUser/RegisterForm';
+
+
 
 function Navbar() {
-  const { logOut } = useContext(AuthContext);
+  const { logOut, currentUser } = useContext(AuthContext);
   const [darkMode, setDarkMode] = useState(false);
+  const [handelModalOpen, setHandelModalOpen] = useState(false) 
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark');
+  };
+
+  const handleEditUser = (bool, user = null) => {
+    // setSingleUser(user)
+    setHandelModalOpen(bool)
   };
 
   const menuItems = (
@@ -42,12 +53,18 @@ function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <button className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500" onClick={logOut}>Log out</button>
+        <button className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500" onClick={() => {
+          handleEditUser(true)
+          }}><ImProfile /></button>
         <button className="btn dark:bg-gray-700 dark:border-gray-500 dark:text-white" onClick={toggleDarkMode}>{darkMode ? <IoSunny /> : <MdOutlineDarkMode />
-
         }</button>
-
+        <button className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500" onClick={logOut}>Log out</button>
       </div>
+      {handelModalOpen &&
+            <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
+              <RegisterForm user={currentUser} selfEdit={true} onClose={handleEditUser}/>
+            </GlobalModal>
+          }
     </nav>
   );
 }

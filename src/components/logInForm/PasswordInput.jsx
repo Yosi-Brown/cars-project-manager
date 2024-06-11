@@ -13,8 +13,8 @@ function PasswordInput({ ...props }) {
   return (
     <div className="relative">
       <label htmlFor={props.htmlFor}
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Your {props.name}
+        className="block text-sm font-medium text-gray-700 dark:text-white">
+        {props.label}
       </label>
       <Field type={showPassword ? "text" : "password"}
         name={props.name}
