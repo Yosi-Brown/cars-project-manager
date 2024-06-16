@@ -139,6 +139,7 @@ function UsersTable({ users, isLoading }) {
               ))}
             </tbody>
           </table>
+          <div>  
           {handelModalOpen &&
             <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
               <RegisterForm user={singleUser} editUser={true} onClose={handleEditUser}/>
@@ -150,6 +151,7 @@ function UsersTable({ users, isLoading }) {
             <ShowUser user={singleUser}/>
           </GlobalModal>
           }
+          </div>
           {/* {handelModalOpen && 
             <GlobalModal isOpen={handelModalOpen}>
               <RegisterForm />

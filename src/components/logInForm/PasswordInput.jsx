@@ -24,7 +24,7 @@ function PasswordInput({ ...props }) {
         placeholder={props.placeholder}
       />
       <button type="button" onClick={togglePasswordVisibility}
-        className="absolute inset-y-0 right-0 pr-3 top-6 flex items-center text-sm leading-5">
+        className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm leading-5">
         {showPassword ? <FaEyeSlash /> : <FaEye />}
         {/* {showPassword ? 'Hide' : 'Show'} */}
       </button>

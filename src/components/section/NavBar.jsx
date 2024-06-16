@@ -29,6 +29,7 @@ function Navbar() {
       <li><Link to="/products">Products</Link></li>
       <li><Link to="/orders">Orders</Link></li>
       <li><Link to="/users">Users</Link></li>
+      <li><Link to="/categories">Categories</Link></li>
     </>
   );
 
@@ -60,11 +61,13 @@ function Navbar() {
         }</button>
         <button className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500" onClick={logOut}>Log out</button>
       </div>
+      <div>
       {handelModalOpen &&
             <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
               <RegisterForm user={currentUser} selfEdit={true} onClose={handleEditUser}/>
             </GlobalModal>
           }
+      </div>
     </nav>
   );
 }
