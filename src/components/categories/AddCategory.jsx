@@ -11,14 +11,15 @@ const url_put = `${import.meta.env.VITE_URL}/categories/edit`;
 function AddCategory({ category = null, onClose }) {
 
   const { setSendGetRequest } = useContext(GlobalContext)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const categoryName = document.getElementById('CategoryName').value
-    console.log(categoryName);
+    // console.log(categoryName);
     const method = category ? "PUT" : "POST";
     const url = category ? `${url_put}/${category._id}` : url_post;
 
-    console.log(url);
+    // console.log(url);
     try {
       const { data } = await axios({
         method: method,
