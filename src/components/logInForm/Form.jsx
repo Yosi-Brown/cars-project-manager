@@ -14,13 +14,13 @@ function Form() {
     email: '',
     password: ''
   }
-  
-  const { isAuth , login } = useContext(AuthContext);
+
+  const { isAuth, login } = useContext(AuthContext);
   const navigate = useNavigate()
 
   useEffect(() => {
-   if(isAuth) navigate("/dashboard")
-  },[isAuth])
+    if (isAuth) navigate("/dashboard")
+  }, [isAuth])
 
   return (
     <Formik
@@ -31,10 +31,10 @@ function Form() {
 
       })}
       initialValues={initialValues}
-      onSubmit={async(value, action) => {
+      onSubmit={async (value, action) => {
         // console.log(value)
         const { data } = await login(value) //לא עובד
-        if(data.success){
+        if (data.success) {
           action.resetForm()
         }
       }}>
@@ -44,7 +44,7 @@ function Form() {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <FormikForm className="space-y-4 md:space-y-6" action="#">
+              <FormikForm className="space-y-4 md:space-y-6">
                 <Input
                   htmlFor='email'
                   type="email"

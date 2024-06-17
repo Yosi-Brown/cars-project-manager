@@ -40,8 +40,8 @@ function App() {
           }
         />
 
-        <Route path="/login" element={<Form />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/login" element={<Form />} />
 
 
         {/* Private Routes */}
