@@ -8,6 +8,7 @@ import GlobalModal from "../modals/GlobalModal";
 import RegisterForm from "../registerUser/RegisterForm";
 
 
+
 function Navbar() {
   const { logOut, currentUser } = useContext(AuthContext);
   const [darkMode, setDarkMode] = useState(false);
