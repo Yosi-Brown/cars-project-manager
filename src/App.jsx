@@ -17,6 +17,7 @@ import Products from "./components/pages/privatePages/Products";
 import Orders from "./components/pages/privatePages/Orders"
 import SignUp from "./components/pages/publicPages/SignUp";
 import Categories from "./components/pages/privatePages/Categories";
+import Profile from "./components/profile/Profile";
 
 
 const Root = ({ isAuth }) => {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
     )
