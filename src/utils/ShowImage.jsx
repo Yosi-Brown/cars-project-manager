@@ -32,8 +32,8 @@ function ShowImage({ product, onClose, setRefresh }) {
         onClose(false)
         setRefresh(prev => (!prev))
       }
-    } catch (data) {
-      console.log(data.response.data)
+    } catch (error) {
+      console.log(error)
     }
     finally {
       setLoading(false)

@@ -32,9 +32,9 @@ function AddCategory({ category = null, onClose }) {
         toastFire(true, data.message)
         onClose()
       }
-    } catch (data) {
-      toastFire(false, data.message)
-      console.log(data.response.data)
+    } catch (error) {
+      console.log(error)
+      toastFire(false, error.response.data.error)
     } finally {
       setSendGetRequest(prev => !prev)
     }
