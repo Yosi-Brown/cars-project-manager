@@ -11,7 +11,7 @@ const url = import.meta.env.VITE_URL;
 
 function AddProduct({ product, setRefresh, onSave }) {
   const [data, isLoading, isError] = useFetch(`${url}/categories/getall`);
-
+  // console.log(product);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = product ? "PUT" : "POST";
@@ -29,8 +29,9 @@ function AddProduct({ product, setRefresh, onSave }) {
         setRefresh(prev => !prev);
         onSave();
       }
-    } catch (data) {
-      toastFire(true, data.message);
+    } catch (error) {
+      console.log(error);
+      toastFire(false, error.response.data.error);
     }
   };
 
@@ -120,11 +121,12 @@ function AddProduct({ product, setRefresh, onSave }) {
             id="categories"
             name="category"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            defaultValue={product ? product.category.name : ""}
+            defaultValue={product ? product.category._id : ""}
           >
-            <option disabled>Select a category</option>
+            <option hidden value={product ? product.category._id: ''}>
+              {product ? product.category.name : 'Select a category'}</option>
             {data && data.categories ? data.categories.map((category) => (
-              <option key={category._id} value={category._ןג}>
+              <option key={category._id} value={category._id}>
                 {category.name}
               </option>
             // )) : <option> <Loading/> </option>}

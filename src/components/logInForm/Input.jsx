@@ -10,7 +10,7 @@ function Input({...props}) {
     <div>
       <label htmlFor={props.htmlFor}
       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Your {props.name}
+        {props.label}
         </label>
       <Field type={props.type}
       name={props.name}

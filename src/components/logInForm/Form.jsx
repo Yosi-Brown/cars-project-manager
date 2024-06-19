@@ -46,6 +46,7 @@ function Form() {
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <FormikForm className="space-y-4 md:space-y-6">
                 <Input
+                  label='Your Email'
                   htmlFor='email'
                   type="email"
                   name="email"
@@ -53,6 +54,7 @@ function Form() {
                   placeholder="name@company.com"
                 />
                 <PasswordInput
+                  label='Your Password'
                   htmlFor='password'
                   type="password"
                   name="password"
@@ -69,9 +71,9 @@ function Form() {
                     onClick={() => navigate('/signUp')}>
                     Sign Up
                   </button>
-                  <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                  <button className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" onClick={() => navigate('/forgotPassword')}>
                     Forgot Password?
-                  </a>
+                  </button>
                 </div>
               </FormikForm>
             </div>

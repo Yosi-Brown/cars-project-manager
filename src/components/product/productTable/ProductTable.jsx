@@ -18,6 +18,7 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
   const [isProductPageOpen, setIsProductPageOpen] = useState(false);
   const [handleImageModalOpen, setHandelImageModalOpen] = useState(false)
   const { setSendGetRequest } = useContext(GlobalContext);
+  // console.log(products);
 
   const handleDelete = async (id) => {
     try {
@@ -91,8 +92,8 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
                 <tr>
                   <th scope="col" className="px-6 py-3">Company</th>
                   <th scope="col" className="px-6 py-3">Model</th>
-                  <th scope="col" className="px-6 py-3">Colors</th>
-                  <th scope="col" className="px-6 py-3">Car Type</th>
+                  {/* <th scope="col" className="px-6 py-3">Colors</th> */}
+                  <th scope="col" className="px-6 py-3">Category</th>
                   <th scope="col" className="px-6 py-3">Year</th>
                   <th scope="col" className="px-6 py-3">Price</th>
                   <th scope="col" className="px-6 py-3">Image</th>
@@ -104,8 +105,8 @@ function ProductTable({ products, isLoading, viewOnly = false }) {
                   <tr key={product._id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                     <td className="px-6 py-4">{product.company}</td>
                     <td className="px-6 py-4">{product.model}</td>
-                    <td className="px-6 py-4">{product.colors.join(", ")}</td>
-                    <td className="px-6 py-4">{product.car_type}</td>
+                    {/* <td className="px-6 py-4">{product.colors.join(", ")}</td> */}
+                    <td className="px-6 py-4">{product.category.name}</td>
                     <td className="px-6 py-4">{product.year}</td>
                     <td className="px-6 py-4">{product.price.toLocaleString('he-IL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}{' USD'}</td>
                     <td className="px-6 py-4" onClick={() => handleEditImage(true, product)}>

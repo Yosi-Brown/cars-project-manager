@@ -18,6 +18,7 @@ import Orders from "./components/pages/privatePages/Orders"
 import SignUp from "./components/pages/publicPages/SignUp";
 import Categories from "./components/pages/privatePages/Categories";
 import Profile from "./components/profile/Profile";
+import ForgotPassword from "./components/pages/publicPages/ForgotPassword";
 
 
 const Root = ({ isAuth }) => {
@@ -43,6 +44,7 @@ function App() {
 
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/login" element={<Form />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
 
 
         {/* Private Routes */}
