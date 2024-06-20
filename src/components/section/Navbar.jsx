@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSunny } from "react-icons/io5";
@@ -10,6 +10,7 @@ import RegisterForm from "../registerUser/RegisterForm";
 
 
 function Navbar() {
+  const navigate = useNavigate()
   const { logOut, currentUser } = useContext(AuthContext);
   const [darkMode, setDarkMode] = useState(false);
   const [handelModalOpen, setHandelModalOpen] = useState(false);
@@ -75,45 +76,29 @@ function Navbar() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
-      <div className="navbar-end">
-        {/* <Link
-          to={{
-            pathname: "/profile",
-            state: { user: currentUser },
-          }}
-          className={`btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500 ${location.pathname === "/profile" ? "active" : ""}`}
-        >
+      <div className="navbar-end gap-1">
+        <button
+          className="btn dark:bg-gray-700 dark:text-white dark:border-gray-500"
+          onClick={() => navigate('profile')}>
           <ImProfile />
-        </Link> */}
-
-        <Link
-          to="/profile"
-          className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500"
-        >
-          <ImProfile />
-        </Link>
+        </button>
 
         <button
-          className="btn dark:bg-gray-700 dark:border-gray-500 dark:text-white"
+          className="btn dark:bg-gray-700 dark:text-white dark:border-gray-500"
           onClick={toggleDarkMode}
         >
           {darkMode ? <IoSunny /> : <MdOutlineDarkMode />}
         </button>
         <button
-          className="btn dark:bg-gray-700 dark:text-gray-100 dark:border-gray-500"
+          className="btn dark:bg-gray-700 dark:text-white dark:border-gray-500"
           onClick={logOut}
         >
           Log out
         </button>
       </div>
       <div>
-        {/* {handelModalOpen &&
-            <GlobalModal isOpen={handelModalOpen} onClose={handleEditUser}>
-              <RegisterForm user={currentUser} selfEdit={true} onClose={handleEditUser}/>
-            </GlobalModal>
-          } */}
       </div>
-    </nav>
+    </nav >
   );
 }
 
