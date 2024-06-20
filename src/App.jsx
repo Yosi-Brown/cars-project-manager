@@ -19,6 +19,7 @@ import SignUp from "./components/pages/publicPages/SignUp";
 import Categories from "./components/pages/privatePages/Categories";
 import Profile from "./components/profile/Profile";
 import ForgotPassword from "./components/pages/publicPages/ForgotPassword";
+import ChangePassword from "./components/pages/publicPages/ChangePassword";
 
 
 const Root = ({ isAuth }) => {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/login" element={<Form />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
 
 
         {/* Private Routes */}
