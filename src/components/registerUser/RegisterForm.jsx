@@ -280,7 +280,7 @@ function RegisterForm({ user = null, editUser = false, selfEdit = false, onClose
       }}
     >
       <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col h-auto items-center justify-center mx-auto md:h-auto lg:py-0">
+        <div className="flex items-center justify-center mx-auto md:h-screen lg:py-0">
         {/* <div className="flex flex-col h-auto items-center justify-center px-6 py-8 mx-auto md:h-auto lg:py-0"> */}
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -349,27 +349,22 @@ function RegisterForm({ user = null, editUser = false, selfEdit = false, onClose
                 />
                 <div className="flex items-center justify-between">
                   {!editUser && !selfEdit ? (
-                    <>
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    <div className='flex gap-4 w-full'>
+                      <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
                         Sign Up
                       </button>
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"
                         onClick={() => navigate('/login')}>
-                        Log In
+                        Back to Log In
                       </button>
-                    </>
+                    </div>
                   ) : (
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       type="submit">
                       Save changes
                     </button>
-                  )}
-                  {!editUser && !selfEdit && (
-                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                      Forgot Password?
-                    </a>
                   )}
                 </div>
               </FormikForm>
