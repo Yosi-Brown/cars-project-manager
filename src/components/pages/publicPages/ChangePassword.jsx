@@ -1,30 +1,45 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toastFire } from '../../../utils/Toaster';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const url = import.meta.env.VITE_URL;
 
-const ChangePassword = () => {
-
+const ChangePassword = ({ profile, onClos }) => {
+  const { currentUser } = useContext(AuthContext)
   const query = new URLSearchParams(location.search);
-  const token = query.get('token')
-  const id = query.get('uid')
+  const token = query?.get('token')
+  const id = query?.get('uid')
   // console.log(id);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
-
-
+  
+  
   const handleSubmit = async (e) => {
     setIsLoading(true)
     e.preventDefault()
-
+    
+    const oldPassword = e.target?.oldPassword?.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
     if (password !== confirmPassword) return alert('Passwords is not compare')
-
-    try {
-      const { data } = await axios.post(`${url}/users/changePassword`, {
+      
+      
+      try {
+        if(profile) {
+          console.log(currentUser._id)
+          const { data } = await axios.post(`${url}/users/changePassword/${currentUser._id}`,
+            {oldPassword, password, confirmPassword},
+            { withCredentials: true }
+      )
+      if (data.success) {
+        toastFire(true, data.message)
+        onClos()
+        // navigate('/profile', { replace: true })
+      }  
+    } else {
+      const { data } = await axios.post(`${url}/users/resetPassword`, {
         id,
         token,
         password,
@@ -34,6 +49,7 @@ const ChangePassword = () => {
         toastFire(true, data.message)
         navigate('/login')
       }
+    }
     } catch (error) {
       console.log(error);
     }
@@ -47,17 +63,17 @@ const ChangePassword = () => {
             Change Password
           </h2>
           <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleSubmit}>
-            {/* <div>
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+            {profile && <div>
+              <label htmlFor="oldPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password</label>
               <input
-                type="email"
-                name="email"
-                id="email"
+                type="password"
+                name="oldPassword"
+                id="oldPassword"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@company.com"
+                placeholder="••••••••"
                 required
               />
-            </div> */}
+            </div>}
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
               <input
