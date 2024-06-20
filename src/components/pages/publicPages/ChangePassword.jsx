@@ -1,6 +1,44 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toastFire } from '../../../utils/Toaster';
+
+const url = import.meta.env.VITE_URL;
 
 const ChangePassword = () => {
+
+  const query = new URLSearchParams(location.search);
+  const token = query.get('token')
+  const id = query.get('uid')
+  // console.log(id);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
+
+
+  const handleSubmit = async (e) => {
+    setIsLoading(true)
+    e.preventDefault()
+
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value;
+    if (password !== confirmPassword) return alert('Passwords is not compare')
+
+    try {
+      const { data } = await axios.post(`${url}/users/changePassword`, {
+        id,
+        token,
+        password,
+        confirmPassword
+      })
+      if (data.success) {
+        toastFire(true, data.message)
+        navigate('/login')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -8,8 +46,8 @@ const ChangePassword = () => {
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Change Password
           </h2>
-          <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
-            <div>
+          <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleSubmit}>
+            {/* <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
               <input
                 type="email"
@@ -19,7 +57,7 @@ const ChangePassword = () => {
                 placeholder="name@company.com"
                 required
               />
-            </div>
+            </div> */}
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
               <input
@@ -36,7 +74,7 @@ const ChangePassword = () => {
               <input
                 type="password"
                 name="confirm-password"
-                id="confirm-password"
+                id="confirmPassword"
                 placeholder="••••••••"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
@@ -44,20 +82,12 @@ const ChangePassword = () => {
             </div>
             <div className="flex items-start">
               <div className="flex items-center h-5">
-                <input
-                  id="newsletter"
-                  aria-describedby="newsletter"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                  required
-                />
               </div>
             </div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit">
               Reset password
             </button>
-
           </form>
         </div>
       </div>
