@@ -4,13 +4,15 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Loading from '../loading/Loading'
+import ChangePassword from '../pages/publicPages/ChangePassword'
+import { toastFire } from "../../utils/Toaster";
 
 const url = import.meta.env.VITE_URL;
 
 function Profile({ isOrderPage = false }) {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [isEditing, setIsEditing] = useState(false);
+  const { currentUser, setCurrentUser, updateProfile, isEditing, setIsEditing } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   const initialValues = {
     firstName: currentUser.firstName || '',
@@ -31,39 +33,60 @@ function Profile({ isOrderPage = false }) {
   const handleOpenEdit = (bool) => {
     setIsEditing(bool);
   };
-
-  const handleSaveClick = async (values) => {
-    try {
-      const isFormComplete = Object.values(values).every(field => field.trim() !== '');
-      
-      if (isOrderPage && !isFormComplete) {
-        alert('Please fill in all the fields.');
-        return; // Stop further execution if fields are empty
-      }
-
-      setIsLoading(true);
-
-      const { data } = await axios.put(`${url}/users/updateProfile/${currentUser._id}`, values, { withCredentials: true });
-
-      if (data.success) {
-        console.log("Data sent to server successfully");
-        setCurrentUser(data.user)
-        
-      }
-
-      setIsEditing(false);
-    } catch (error) {
-      console.error('Error saving data:', error);
-    } finally {
-      setIsLoading(false);
+// console.log(currentUser._id);
+  const changePassword = (boll) => {
+    setShowChangePassword(boll)
+    if(showChangePassword){
+      return <ChangePassword profile={boll} />
     }
-  };
+  }
+
+  const handleSubmit = async (values) => {
+    const isFormComplete = Object.values(values).every(field => field.trim() !== '');
+    if (isOrderPage && !isFormComplete) {
+      toastFire(false, 'Please fill in all the fields.');
+      return; // Stop further execution if fields are empty
+    }
+    console.log(isEditing);
+    const req = await updateProfile(values)
+    if (req) {
+      setIsEditing(false);
+    }
+    // console.log(data);
+  }
+
+  // const handleSaveClick = async (values) => {
+  //   try {
+  //     const isFormComplete = Object.values(values).every(field => field.trim() !== '');
+
+  //     if (isOrderPage && !isFormComplete) {
+  //       alert('Please fill in all the fields.');
+  //       return; // Stop further execution if fields are empty
+  //     }
+
+  //     setIsLoading(true);
+
+  //     const { data } = await axios.put(`${url}/users/updateProfile/${currentUser._id}`, values, { withCredentials: true });
+
+  //     if (data.success) {
+  //       console.log("Data sent to server successfully");
+  //       setCurrentUser(data.user)
+
+  //     }
+
+  //     setIsEditing(false);
+  //   } catch (error) {
+  //     console.error('Error saving data:', error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleCancelClick = (resetForm) => {
     resetForm();
     setIsEditing(false);
   };
-
+ if(showChangePassword) return (<ChangePassword profile={true} onClos={() => setShowChangePassword(false)}/>)
   return isLoading ? (
     <Loading />
   ) : (
@@ -147,6 +170,15 @@ function Profile({ isOrderPage = false }) {
                           />
                           <ErrorMessage name="address" component="div" className="text-red-500 text-xs mt-1" />
                         </div>
+                        <div className="md:col-span-2">
+                          <br></br>
+                          <button
+                            type="button"
+                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 h-10 border mt-1 rounded px-4 w-full'
+                            onClick={() => changePassword(true)}
+                          >Change Password
+                          </button>
+                        </div>
 
                         <div className="md:col-span-5 text-right">
                           <div className="inline-flex items-end">
@@ -154,7 +186,7 @@ function Profile({ isOrderPage = false }) {
                               <>
                                 <button
                                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                  type="submit" onClick={() => handleSaveClick(values)}
+                                  type="submit" onClick={() => handleSubmit(values)}
                                 >
                                   Save
                                 </button>

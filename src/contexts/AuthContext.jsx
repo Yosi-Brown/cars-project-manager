@@ -15,6 +15,8 @@ function AuthProvider({ children }) {
 
   const [isAuth, setIsAuth] = useState(false)
 
+  const [isEditing, setIsEditing] = useState(false);
+
 
   async function authUser() {
     try {
@@ -88,6 +90,7 @@ function AuthProvider({ children }) {
           toastFire(true, data.message)
           console.log('profile updated')
           setCurrentUser(data.user)
+          setIsEditing(false)
         }
       }
     } catch (error) {
@@ -111,7 +114,9 @@ function AuthProvider({ children }) {
     signUp,
     currentUser,
     setCurrentUser,
-    updateProfile
+    updateProfile,
+    isEditing,
+    setIsEditing
   }
   return (
     <AuthContext.Provider value={value}>

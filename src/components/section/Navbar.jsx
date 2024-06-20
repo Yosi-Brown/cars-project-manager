@@ -79,7 +79,7 @@ function Navbar() {
       <div className="navbar-end gap-1">
         <button
           className="btn dark:bg-gray-700 dark:text-white dark:border-gray-500"
-          onClick={() => navigate('profile')}>
+          onClick={() => navigate('/profile')}>
           <ImProfile />
         </button>
 
