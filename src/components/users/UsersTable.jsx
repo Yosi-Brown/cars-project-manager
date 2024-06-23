@@ -46,7 +46,7 @@ function UsersTable({ users, isLoading }) {
       }
     } catch (error) {
       console.log(error)
-      toastFire(false, error.response.data.error)
+      toastFire(false, error.response.data.message)
     }
   };
 
