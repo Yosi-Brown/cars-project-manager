@@ -80,7 +80,7 @@ function Dashboard() {
   }
 
   return (
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 justify-center items-center h-screen dark:bg-gray-700 dark:text-gray-400">
+<div className="flex  md:grid-cols-2 lg:grid-cols-2 gap-8 justify-center items-center h-screen dark:bg-gray-700 dark:text-gray-400">
   <div className='max-w-xs'>
     <ChartComponent title="Pie Chart" type="pie" data={data.products} />
   </div>
