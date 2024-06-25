@@ -20,12 +20,14 @@ import Categories from "./components/pages/privatePages/Categories";
 import Profile from "./components/profile/Profile";
 import ForgotPassword from "./components/pages/publicPages/ForgotPassword";
 import ChangePassword from "./components/pages/publicPages/ChangePassword";
-
+import Footer from "./components/section/Footer";
 
 const Root = ({ isAuth }) => {
   return <>
     {isAuth && <Navbar />}
     <Outlet />
+    <Footer />
+
   </>
 }
 

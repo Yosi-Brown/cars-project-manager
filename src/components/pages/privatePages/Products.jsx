@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect ,useState } from 'react'
 import useFetch from '../../../hooks/useFetch'
 import Loading from '../../loading/Loading'
 import ProductTable from '../../product/productTable/ProductTable'
@@ -18,6 +18,9 @@ function Products() {
   const indexOfFirstProduct = indexOfLastProduct - productPerPage; //17-3
   const currentProducts = data?.products.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
 
   return (
     <>
