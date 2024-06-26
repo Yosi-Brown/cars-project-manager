@@ -43,9 +43,9 @@ function AddCategory({ category = null, onClose }) {
   return (
     <form
       onSubmit={handleSubmit}>
-      <div className="mb-5">
+      <div className="mb-5 h-[90px] w-[190px]">
         <label htmlFor='category'
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">
           Category Name
         </label>
         <input type='text'
@@ -53,7 +53,7 @@ function AddCategory({ category = null, onClose }) {
           name='categoryName'
           placeholder='Enter category name'
           defaultValue={category?.name}
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+          className="mt-8 ml-2.5 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[90%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
       </div>
       <button
         type="submit"

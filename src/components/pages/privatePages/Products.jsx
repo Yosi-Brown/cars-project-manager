@@ -23,7 +23,7 @@ function Products() {
   }, [currentPage]);
 
   return (
-    <>
+    <div className=''>
       {isLoading && <Loading />}
       {/* {!isLoading && !data?.users.length === 0 && <div>have not users yet</div>} */}
       {isError && <div>{isError}</div>}
@@ -35,7 +35,7 @@ function Products() {
       setCurrentPage={setCurrentPage}
       totalProduct={data.products.length}
       />}
-    </>
+    </div>
   )
 }
 
