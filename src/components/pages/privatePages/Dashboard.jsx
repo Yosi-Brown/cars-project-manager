@@ -2,6 +2,7 @@ import React from 'react';
 import { Pie, Line, Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
 import useFetch from '../../../hooks/useFetch';
+import Loading from '../../loading/Loading';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, LineElement, BarElement, CategoryScale, LinearScale, PointElement);
 
@@ -72,7 +73,7 @@ function Dashboard() {
   const [data, isLoading, isError] = useFetch(`${url}/products/getall`);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div> <Loading/> </div>;
   }
 
   if (isError || !data || !data.products) {
