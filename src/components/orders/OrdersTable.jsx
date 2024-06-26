@@ -79,6 +79,7 @@ function OrdersTable({ orders, isLoading }) {
           <table className="w-full text-sm h-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
               <tr>
+                <th scope="col" className="px-6 py-3">Order Number</th>
                 <th scope="col" className="px-6 py-3">Customer Name</th>
                 <th scope="col" className="px-6 py-3">Order Date</th>
                 <th scope="col" className="px-6 py-3">Total Price</th>
@@ -89,6 +90,7 @@ function OrdersTable({ orders, isLoading }) {
             <tbody>
               {orders.map((order) => (
                 <tr key={order._id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                  <td className="px-6 py-4">{order.orderNum}</td>
                   <td className="px-6 py-4">
                     <button
                       onClick={() => showUser(true, order.user)}>{order.user.firstName} {order.user.lastName}</button></td>
