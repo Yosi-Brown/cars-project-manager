@@ -6,23 +6,35 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import './App.css'
-import Form from './components/logInForm/Form'
-import NavBar from './components/section/NavBar'
+import "./App.css";
+import Form from "./components/logInForm/Form";
+import Navbar from "./components/section/Navbar";
 import Dashboard from "./components/pages/privatePages/Dashboard";
-import Table from "./components/product/productTable/Table";
-import RegisterForm from "./components/registerUser/RegisterForm";
-import { AuthContext } from './contexts/AuthContext'
+import { AuthContext } from "./contexts/AuthContext";
 import { useContext } from "react";
-import Products from "./components/product/AddProduct";
-import AddProduct from "./components/product/AddProduct";
+import Users from "./components/pages/privatePages/Users";
+import Products from "./components/pages/privatePages/Products";
+import Orders from "./components/pages/privatePages/Orders";
+import SignUp from "./components/pages/publicPages/SignUp";
+import Categories from "./components/pages/privatePages/Categories";
+import Profile from "./components/profile/Profile";
+import ForgotPassword from "./components/pages/publicPages/ForgotPassword";
+import ChangePassword from "./components/pages/publicPages/ChangePassword";
+import Footer from "./components/section/Footer";
 
 const Root = ({ isAuth }) => {
-  return <>
-    {isAuth && <NavBar />}
-    <Outlet />
-  </>
-}
+  return (
+    <>
+      <div className="flex flex-col min-h-screen">
+        {isAuth && <Navbar />}
+        <main className="flex-grow">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
+};
 
 function App() {
   const { isAuth } = useContext(AuthContext);
@@ -38,26 +50,28 @@ function App() {
           }
         />
 
+        {/* <Route path="/signUp" element={<SignUp />} /> */}
         <Route path="/login" element={<Form />} />
-        <Route path="/signup" element={<RegisterForm />} />
-
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
 
         {/* Private Routes */}
         <Route element={isAuth ? <Outlet /> : <Navigate to={"login"} />}>
-          <Route path="/allProducts" element={<Table />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/addproducts" element={<Products />} />
-          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
     )
   );
   return (
     <>
-    {/* <Products /> */}
       <RouterProvider router={router} />
     </>
   );
 }
 
-export default App
+export default App;
