@@ -6,15 +6,15 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import './App.css'
-import Form from './components/logInForm/Form'
-import Navbar from './components/section/Navbar'
+import "./App.css";
+import Form from "./components/logInForm/Form";
+import Navbar from "./components/section/Navbar";
 import Dashboard from "./components/pages/privatePages/Dashboard";
-import { AuthContext } from './contexts/AuthContext'
+import { AuthContext } from "./contexts/AuthContext";
 import { useContext } from "react";
 import Users from "./components/pages/privatePages/Users";
 import Products from "./components/pages/privatePages/Products";
-import Orders from "./components/pages/privatePages/Orders"
+import Orders from "./components/pages/privatePages/Orders";
 import SignUp from "./components/pages/publicPages/SignUp";
 import Categories from "./components/pages/privatePages/Categories";
 import Profile from "./components/profile/Profile";
@@ -23,16 +23,18 @@ import ChangePassword from "./components/pages/publicPages/ChangePassword";
 import Footer from "./components/section/Footer";
 
 const Root = ({ isAuth }) => {
-  return <div className="flex flex-col min-h-screen">
-    {isAuth && <Navbar />}
-    <main className="flex-grow">
-
-    <Outlet />
-    {/* <Footer /> */}
-    </main>
-
-  </div>
-}
+  return (
+    <>
+      <div className="flex flex-col min-h-screen">
+        {isAuth && <Navbar />}
+        <main className="flex-grow">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
+};
 
 function App() {
   const { isAuth } = useContext(AuthContext);
@@ -52,7 +54,6 @@ function App() {
         <Route path="/login" element={<Form />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/changePassword" element={<ChangePassword />} />
-
 
         {/* Private Routes */}
         <Route element={isAuth ? <Outlet /> : <Navigate to={"login"} />}>

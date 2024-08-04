@@ -62,7 +62,7 @@ const ChartComponent = ({ title, type, data }) => {
   }
 
   return (
-    <div className='chart-container p-4 bg-white rounded-lg shadow-lg'>
+    <div className='chart-container  p-4 bg-white rounded-lg shadow-lg'>
       <h3 className='text-center mb-2'>{title}</h3>
       <ChartType data={chartData} />
     </div>
