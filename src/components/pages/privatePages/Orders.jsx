@@ -9,12 +9,12 @@ function Orders() {
   const [data, isLoading, isError] = useFetch(`${url}/orders/getall`)
 
   return (
-  <>
+  <div>
     {isLoading && <Loading />}
     {/* {!isLoading && !data?.users.length === 0 && <div>have not users yet</div>} */}
     {isError && <div>Error</div>}
     {data && <OrdersTable orders={data.orders} isLoading={isLoading} />}
-  </>
+  </div>
   )
 }
 

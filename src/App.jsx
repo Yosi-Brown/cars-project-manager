@@ -23,12 +23,15 @@ import ChangePassword from "./components/pages/publicPages/ChangePassword";
 import Footer from "./components/section/Footer";
 
 const Root = ({ isAuth }) => {
-  return <>
+  return <div className="flex flex-col min-h-screen">
     {isAuth && <Navbar />}
-    <Outlet />
-    <Footer />
+    <main className="flex-grow">
 
-  </>
+    <Outlet />
+    {/* <Footer /> */}
+    </main>
+
+  </div>
 }
 
 function App() {
